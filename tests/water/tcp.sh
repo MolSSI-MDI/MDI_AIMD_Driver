@@ -13,7 +13,7 @@ cp -r data work
 cd work
 
 #launch QE
-${QE_LOC} -mdi "-role ENGINE -name QM -method TCP -port 8021 -hostname localhost" -mdi_name QM -in qe.in > qe.out &
+${QE_LOC} -mdi "-role ENGINE -name QM -method TCP -port 8021 -hostname localhost" -in qe.in > qe.out &
 
 #launch LAMMPS
 ${LAMMPS_LOC} -mdi "-role ENGINE -name MM -method TCP -port 8021 -hostname localhost" -in lammps.in > lammps.out &

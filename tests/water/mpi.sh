@@ -15,6 +15,6 @@ cd work
 #launch the codes
 mpiexec -n 1 ${DRIVER_LOC} -mdi "-role DRIVER -name driver -method MPI" : \
     -n 1 ${LAMMPS_LOC} -mdi "-role ENGINE -name MM -method MPI" -in lammps.in > lammps.out : \
-    -n 8 ${QE_LOC} -mdi "-role ENGINE -name QM -method MPI" -mdi_name QM -in qe.in > qe.out
+    -n 8 ${QE_LOC} -mdi "-role ENGINE -name QM -method MPI" -in qe.in > qe.out
 
 wait
