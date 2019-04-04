@@ -108,6 +108,9 @@ int main(int argc, char **argv) {
  
     // Have the QM engine perform an SCF calculation
     MDI_Send_Command("SCF", qm_comm);
+
+    // Have the MM engine proceed to the @FORCES node
+    MDI_Send_Command("@FORCES", mm_comm);
  
     // Get the QM energy
     MDI_Send_Command("<ENERGY", qm_comm);
@@ -125,8 +128,8 @@ int main(int argc, char **argv) {
     MDI_Send_Command(">FORCES", mm_comm);
     MDI_Send(&forces, 3*natoms, MDI_DOUBLE, mm_comm);
  
-    // Do an MD timestep
-    MDI_Send_Command("ATOM_STEP", mm_comm);
+    // Have the MM engine proceed to the @COORDS node, which completes the timestep
+    MDI_Send_Command("@COORDS", mm_comm);
  
     cout << "timestep: " << iiteration << " " << mm_energy << " " << qm_energy << endl;
   }
