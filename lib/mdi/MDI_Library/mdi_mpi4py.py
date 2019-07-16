@@ -19,12 +19,23 @@ try:
 except ImportError:
     use_mpi4py = False
 
-# get the name of the MDI library
-mdi_name_file = open(dir_path + "/mdi_name","r")
-mdi_name = mdi_name_file.read()
+# get the path to the MDI Library
+try: # Unix
+    mdi_name_file = open(dir_path + "/mdi_name","r")
+    mdi_name = mdi_name_file.read()
+    mdi_path = dir_path + "/" + mdi_name
+except IOError: # Windows
+    mdi_name_file = open(dir_path + "\\mdi_name","r")
+    mdi_name = mdi_name_file.read()
+    mdi_path = dir_path + "\\" + mdi_name
 
-# load the MDI library
-mdi = ctypes.CDLL(dir_path + "/" + mdi_name)
+# load the MDI Library
+try:
+    mdi = ctypes.CDLL(mdi_path)
+    MDI_COMMAND_LENGTH = ctypes.c_int.in_dll(mdi, "MDI_COMMAND_LENGTH").value
+except (ValueError, AttributeError):
+    mdi = ctypes.WinDLL(mdi_path)
+    MDI_COMMAND_LENGTH = ctypes.c_int.in_dll(mdi, "MDI_COMMAND_LENGTH").value
 
 # MDI Variables
 MDI_COMMAND_LENGTH = ctypes.c_int.in_dll(mdi, "MDI_COMMAND_LENGTH").value
@@ -81,7 +92,7 @@ class MPI4PYCommunicator():
             strbuf = [ 0 for i in range(length) ]
             for i in range(min(length,len(buf))):
                 strbuf[i] = ord(buf[i])
-            buf = np.array(strbuf, dtype=np.uint8)
+            buf = np.array(strbuf, dtype=numpy_type)
 
         else:
             raise Exception("MDI Error: MDI type not recognized")
@@ -130,12 +141,10 @@ class MPI4PYCommunicator():
 
 
     def exchange_version(self):
-        arg_type = ctypes.c_double
-        mdi_type = MDI_DOUBLE
         sendbuf = np.array([MDI_VERSION], dtype=np.float64)
         self.send(sendbuf, 1, MDI_DOUBLE)
 
-        recvbuf = self.recv(1, MDI_DOUBLE)
+        self.mdi_version = self.recv(1, MDI_DOUBLE)
         return 0
 
 class MPI4PYManager():
@@ -152,6 +161,9 @@ class MPI4PYManager():
 
         # order of this rank's associated code
         self.mpi_code_rank = 0
+
+        # name of this code
+        self.name = None
 
         if mpi_comm is None:
             raise Exception("MDI Error: Attempting to use MPI4Py without an MPI communciator")
@@ -170,11 +182,11 @@ class MPI4PYManager():
             raise Exception("MDI Error: Attempting to use MPI4Py but MDI method is not MPI")
 
         # determine the name of the code associated with this MPI rank
-        my_name = None
+        self.name = None
         for i in range(len(options)):
             if options[i] == "-name" and i < len(options) - 1:
-                my_name = options[i+1]
-        if not my_name:
+                self.name = options[i+1]
+        if not self.name:
             raise Exception("MDI Error: Unable to find -name option")
 
         # determine the role of this code
@@ -186,7 +198,7 @@ class MPI4PYManager():
             pass
         elif my_role == "DRIVER":
             # if the role is driver, set the name to a null string
-            my_name = ""
+            self.name = ""
         else:
             raise Exception("MDI Error: Unable to find -name option")
 
@@ -202,8 +214,8 @@ class MPI4PYManager():
 
         # construct a NumPy buffer of the name of this rank's code
         namebuf = [ 0 for i in range(MDI_NAME_LENGTH) ]
-        for i in range(len(my_name)):
-            namebuf[i] = ord(my_name[i])
+        for i in range(len(self.name)):
+            namebuf[i] = ord(self.name[i])
         sendbuf = np.array(namebuf, dtype=np.uint8)
 
         # gather the names of the codes associated with all of the ranks
@@ -286,8 +298,22 @@ class MPI4PYManager():
 
     def Recv_Command(self, comm):
         communicator = self.communicators[comm-1]
-        return_value = communicator.recv(MDI_COMMAND_LENGTH, MDI_CHAR)
-        return return_value
+
+        get_new_command = True
+
+        while get_new_command:
+            command = communicator.recv(MDI_COMMAND_LENGTH, MDI_CHAR)
+            get_new_command = False
+
+            # check if this command corresponds to one of MDI's standard built-in commands
+            if command == "<NAME":
+                self.Send(self.name, MDI_NAME_LENGTH, MDI_CHAR, comm)
+                get_new_command = True
+            elif command == "<VERSION":
+                self.Send(MDI_VERSION, 1, MDI_DOUBLE, comm)
+                get_new_command = True
+
+        return command
 
     def Send_Command(self, buf, comm):
         communicator = self.communicators[comm-1]
