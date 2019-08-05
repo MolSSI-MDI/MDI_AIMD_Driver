@@ -12,6 +12,9 @@ fi
 cp -r data work
 cd work
 
+#set the number of threads
+export OMP_NUM_THREADS=1
+
 #launch QE
 ${QE_LOC} -mdi "-role ENGINE -name QM -method TCP -port 8021 -hostname localhost" -in qe.in > qe.out &
 

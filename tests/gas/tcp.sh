@@ -12,6 +12,9 @@ fi
 cp -r data work
 cd work
 
+#set the number of threads
+export OMP_NUM_THREADS=1
+
 #launch Psi4
 (cd /home/tbarnes/mdi/plugin_test/mdi_engine; psi4 -n 16 -i input.dat) &
 #export PYTHONPATH=$PYTHONPATH:/home/tbarnes/mdi/plugin_test/mdi_engine
