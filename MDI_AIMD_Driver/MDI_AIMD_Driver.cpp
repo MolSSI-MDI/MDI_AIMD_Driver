@@ -104,9 +104,6 @@ int main(int argc, char **argv) {
     MDI_Send_Command(">COORDS", qm_comm);
     MDI_Send(&coords, 3*natoms, MDI_DOUBLE, qm_comm);
  
-    // Have the QM engine perform an SCF calculation
-    MDI_Send_Command("SCF", qm_comm);
-
     // Have the MM engine proceed to the @FORCES node
     MDI_Send_Command("@FORCES", mm_comm);
  
