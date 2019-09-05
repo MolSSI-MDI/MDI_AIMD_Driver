@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
   double forces[3*natoms];
 
   // Have the MM engine initialize a new MD simulation
-  MDI_Send_Command("INIT_MD", mm_comm);
+  MDI_Send_Command("@INIT_MD", mm_comm);
  
   // Perform each iteration of the simulation
   for (int iiteration = 0; iiteration < niterations; iiteration++) {
