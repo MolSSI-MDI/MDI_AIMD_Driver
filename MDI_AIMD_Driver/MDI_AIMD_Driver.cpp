@@ -48,7 +48,8 @@ int main(int argc, char **argv) {
   MDI_Comm qm_comm = MDI_NULL_COMM;
   int nengines = 2;
   for (int iengine=0; iengine < nengines; iengine++) {
-    MDI_Comm comm = MDI_Accept_Communicator();
+    MDI_Comm comm;
+    MDI_Accept_Communicator(&comm);
  
     // Determine the name of this engine
     char* engine_name = new char[MDI_NAME_LENGTH];
