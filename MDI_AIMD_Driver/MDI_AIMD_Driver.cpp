@@ -45,8 +45,7 @@ int main(int argc, char **argv) {
 
   // Connect to the engines
   MDI_Comm mm_comm = MDI_NULL_COMM;
-  MDI_Comm qm_comm = MDI_NULL_COMM;
-  int nengines = 2;
+  int nengines = 1;
   for (int iengine=0; iengine < nengines; iengine++) {
     MDI_Comm comm;
     MDI_Accept_Communicator(&comm);
@@ -64,12 +63,6 @@ int main(int argc, char **argv) {
       }
       mm_comm = comm;
     }
-    else if ( strcmp(engine_name, "QM") == 0 ) {
-      if ( qm_comm != MDI_NULL_COMM ) {
-	throw runtime_error("Accepted a communicator from a second QM engine.");
-      }
-      qm_comm = comm;
-    }
     else {
       throw runtime_error("Unrecognized engine name.");
     }
@@ -80,7 +73,6 @@ int main(int argc, char **argv) {
   // Perform the simulation
   int niterations = 10;  // Number of MD iterations
   int natoms;
-  double qm_energy;
   double mm_energy;
  
   // Receive the number of atoms from the MM engine
@@ -101,24 +93,16 @@ int main(int argc, char **argv) {
     MDI_Send_Command("<COORDS", mm_comm);
     MDI_Recv(&coords, 3*natoms, MDI_DOUBLE, mm_comm);
  
-    // Send the coordinates to the QM engine
-    MDI_Send_Command(">COORDS", qm_comm);
-    MDI_Send(&coords, 3*natoms, MDI_DOUBLE, qm_comm);
- 
     // Have the MM engine proceed to the @FORCES node
     MDI_Send_Command("@FORCES", mm_comm);
- 
-    // Get the QM energy
-    MDI_Send_Command("<ENERGY", qm_comm);
-    MDI_Recv(&qm_energy, 1, MDI_DOUBLE, qm_comm);
  
     // Get the MM energy
     MDI_Send_Command("<ENERGY", mm_comm);
     MDI_Recv(&mm_energy, 1, MDI_DOUBLE, mm_comm);
- 
-    // Receive the forces from the QM engine
-    MDI_Send_Command("<FORCES", qm_comm);
-    MDI_Recv(&forces, 3*natoms, MDI_DOUBLE, qm_comm);
+
+    // Get the forces from the MM engine
+    MDI_Send_Command("<FORCES", mm_comm);
+    MDI_Recv(&forces, 3*natoms, MDI_DOUBLE, mm_comm);
  
     // Send the forces to the MM engine
     MDI_Send_Command(">FORCES", mm_comm);
@@ -127,12 +111,11 @@ int main(int argc, char **argv) {
     // Have the MM engine proceed to the @COORDS node, which completes the timestep
     MDI_Send_Command("@COORDS", mm_comm);
  
-    cout << "timestep: " << iiteration << " " << mm_energy << " " << qm_energy << endl;
+    cout << "timestep: " << iiteration << " " << mm_energy << " " << endl;
   }
 
   // Send the "EXIT" command to each of the engines
   MDI_Send_Command("EXIT", mm_comm);
-  MDI_Send_Command("EXIT", qm_comm);
 
   // Synchronize all MPI ranks
   MPI_Barrier(world_comm);
