@@ -47,20 +47,22 @@ DllExport extern const int MDI_COMMAND_LENGTH;
 // length of an MDI name in characters
 DllExport extern const int MDI_NAME_LENGTH;
 
+// length of an MDI label in characters
+DllExport extern const int MDI_LABEL_LENGTH;
+
 // value of a null communicator
-DllExport extern const MDI_Comm MDI_NULL_COMM;
+DllExport extern const MDI_Comm MDI_COMM_NULL;
 
 // MDI data types
 DllExport extern const int MDI_INT;
 DllExport extern const int MDI_DOUBLE;
 DllExport extern const int MDI_CHAR;
-DllExport extern const int MDI_INT_NUMPY;
-DllExport extern const int MDI_DOUBLE_NUMPY;
+DllExport extern const int MDI_BYTE;
 
 // MDI communication types
 DllExport extern const int MDI_TCP;
 DllExport extern const int MDI_MPI;
-DllExport extern const int MDI_LIB;
+DllExport extern const int MDI_LINK;
 DllExport extern const int MDI_TEST;
 
 // MDI role types

@@ -4,7 +4,9 @@ include(CMakePackageConfigHelpers)
 
 
 #check for MPI
-find_package(MPI)
+if ( NOT ( mpi STREQUAL "OFF") )
+   find_package(MPI)
+endif()
 if( NOT MPI_FOUND )
    if( mpi STREQUAL "ON" )
       message( WARNING "Could not find MPI.  Compiling without MPI support." )
@@ -13,8 +15,8 @@ if( NOT MPI_FOUND )
 endif()
 
 #confirm that "language" is a valid value
-if( language AND (NOT language STREQUAL "C") AND (NOT language STREQUAL "Fortran") AND (NOT language STREQUAL "Python") )
-   message( FATAL_ERROR "Value of language not recognized. Accepted values are: C; Fortran; Python." )
+if( language AND (NOT language STREQUAL "C") AND (NOT language STREQUAL "CXX") AND (NOT language STREQUAL "Fortran") AND (NOT language STREQUAL "Python") )
+   message( FATAL_ERROR "Value of language not recognized. Accepted values are: C; CXX; Fortran; Python." )
 endif()
 
 #determine whether this is a SHARED or STATIC build
@@ -132,8 +134,8 @@ if( python_package STREQUAL "ON" )
 
 else()
 
-    set(MDI_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/MDI_Library)
-    set(MDI_INSTALL_LIBDIR     ${CMAKE_INSTALL_LIBDIR}/MDI_Library)
+    set(MDI_INSTALL_INCLUDEDIR ${CMAKE_INSTALL_INCLUDEDIR}/mdi)
+    set(MDI_INSTALL_LIBDIR     ${CMAKE_INSTALL_LIBDIR}/mdi)
 
 endif()
 

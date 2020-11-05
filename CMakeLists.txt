@@ -29,11 +29,11 @@ elseif( language STREQUAL "Python" )
    set(use_C "C")
    set(use_Python "Python")
 else()
-   message( FATAL_ERROR "Language not supported.  Supported languages: C, Fortran, Python" )
+   message( FATAL_ERROR "Language not supported.  Supported languages: C, CXX, Fortran, Python" )
 endif()
 
 project(mdi
-        VERSION 0.6.5
+        VERSION 1.1.6
         LANGUAGES ${use_C} ${use_CXX} ${use_Fortran})
 
 add_subdirectory(MDI_Library)
