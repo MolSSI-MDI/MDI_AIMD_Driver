@@ -44,8 +44,8 @@ int main(int argc, char **argv) {
   }
 
   // Connect to the engines
-  MDI_Comm mm_comm = MDI_NULL_COMM;
-  MDI_Comm qm_comm = MDI_NULL_COMM;
+  MDI_Comm mm_comm = MDI_COMM_NULL;
+  MDI_Comm qm_comm = MDI_COMM_NULL;
   int nengines = 2;
   for (int iengine=0; iengine < nengines; iengine++) {
     MDI_Comm comm;
@@ -59,13 +59,13 @@ int main(int argc, char **argv) {
     cout << "Engine name: " << engine_name << endl;
  
     if ( strcmp(engine_name, "MM") == 0 ) {
-      if ( mm_comm != MDI_NULL_COMM ) {
+      if ( mm_comm != MDI_COMM_NULL ) {
 	throw runtime_error("Accepted a communicator from a second MM engine.");
       }
       mm_comm = comm;
     }
     else if ( strcmp(engine_name, "QM") == 0 ) {
-      if ( qm_comm != MDI_NULL_COMM ) {
+      if ( qm_comm != MDI_COMM_NULL ) {
 	throw runtime_error("Accepted a communicator from a second QM engine.");
       }
       qm_comm = comm;
