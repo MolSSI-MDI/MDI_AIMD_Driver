@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.8.16-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +21,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
+  <td style="padding-left: 0.5em;">
+  <td id="projectlogo"><img alt="Logo" src="mdi_main_logo_text_300x204.png"/></td>
+  <td id="projectalign" style="padding-left: 6.0em;">
    <div id="projectname">Molssi Driver Interface Library
    </div>
   </td>
@@ -95,6 +98,12 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:ae3a53af242cc08c4f50389eec3c9edae"><td class="memItemLeft" align="right" valign="top"><a id="ae3a53af242cc08c4f50389eec3c9edae"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>sock_t</b>&#160;&#160;&#160;int</td></tr>
+<tr class="separator:ae3a53af242cc08c4f50389eec3c9edae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56778b76f51f2e3decb6992848f49b4e"><td class="memItemLeft" align="right" valign="top"><a id="a56778b76f51f2e3decb6992848f49b4e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>mdi_strdup</b>&#160;&#160;&#160;strdup</td></tr>
+<tr class="separator:a56778b76f51f2e3decb6992848f49b4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c52f3e083ffd8acde0b01f74de7a5a"><td class="memItemLeft" align="right" valign="top"><a id="a73c52f3e083ffd8acde0b01f74de7a5a"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>COMMAND_LENGTH</b>&#160;&#160;&#160;12</td></tr>
 <tr class="separator:a73c52f3e083ffd8acde0b01f74de7a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -107,6 +116,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a93b8fd83bd9cb3b4afc229d00b38e912"><td class="memItemLeft" align="right" valign="top"><a id="a93b8fd83bd9cb3b4afc229d00b38e912"></a>
 typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>MDI_Comm_Type</b></td></tr>
 <tr class="separator:a93b8fd83bd9cb3b4afc229d00b38e912"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a402cd33b3dcf17a409745dc74a899148"><td class="memItemLeft" align="right" valign="top"><a id="a402cd33b3dcf17a409745dc74a899148"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>MDI_Datatype_Type</b></td></tr>
+<tr class="separator:a402cd33b3dcf17a409745dc74a899148"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae301b80284ed481523c43e095398ba92"><td class="memItemLeft" align="right" valign="top"><a id="ae301b80284ed481523c43e095398ba92"></a>
 typedef struct <a class="el" href="structdynamic__array__struct.html">dynamic_array_struct</a>&#160;</td><td class="memItemRight" valign="bottom"><b>vector</b></td></tr>
 <tr class="separator:ae301b80284ed481523c43e095398ba92"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +212,14 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi__
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi__global_8h.html#a744d9706c873299c528f99016ace9201">is_initialized</a></td></tr>
 <tr class="memdesc:a744d9706c873299c528f99016ace9201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for whether MDI has been previously initialized. <br /></td></tr>
 <tr class="separator:a744d9706c873299c528f99016ace9201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac11ba5fc1a91e40e8ac14cc31aa65a3f"><td class="memItemLeft" align="right" valign="top"><a id="ac11ba5fc1a91e40e8ac14cc31aa65a3f"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi__global_8h.html#ac11ba5fc1a91e40e8ac14cc31aa65a3f">initialized_mpi</a></td></tr>
+<tr class="memdesc:ac11ba5fc1a91e40e8ac14cc31aa65a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flag for whether MDI called MPI_Init. <br /></td></tr>
+<tr class="separator:ac11ba5fc1a91e40e8ac14cc31aa65a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66bb70e3c3f8e140995b0c7aed39f72f"><td class="memItemLeft" align="right" valign="top"><a id="a66bb70e3c3f8e140995b0c7aed39f72f"></a>
+MPI_Comm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi__global_8h.html#a66bb70e3c3f8e140995b0c7aed39f72f">mdi_mpi_comm_world</a></td></tr>
+<tr class="memdesc:a66bb70e3c3f8e140995b0c7aed39f72f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal copy of MPI_COMM_WORLD, used when MDI initializes MPI. <br /></td></tr>
+<tr class="separator:a66bb70e3c3f8e140995b0c7aed39f72f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81771e72698989541351fc9fdd75eba6"><td class="memItemLeft" align="right" valign="top"><a id="a81771e72698989541351fc9fdd75eba6"></a>
 int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi__global_8h.html#a81771e72698989541351fc9fdd75eba6">mpi4py_recv_callback</a> )(void *, int, int, int, MDI_Comm_Type)</td></tr>
 <tr class="memdesc:a81771e72698989541351fc9fdd75eba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Python callback pointer for MPI_Recv. <br /></td></tr>
@@ -544,6 +564,7 @@ int(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mdi
 </div>
 </div>
 </div><!-- contents -->
+<!-- HTML footer for doxygen 1.8.16-->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">
