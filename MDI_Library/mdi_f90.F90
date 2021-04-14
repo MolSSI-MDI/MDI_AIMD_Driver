@@ -228,8 +228,17 @@ MODULE MDI
    INTEGER(KIND=C_INT), PARAMETER :: MDI_COMM_NULL      = 0
 
    INTEGER(KIND=C_INT), PARAMETER :: MDI_INT            = 1
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_INT8_T         = 7
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_INT16_T        = 8
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_INT32_T        = 9
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_INT64_T        = 10
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_UINT8_T        = 11
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_UINT16_T       = 12
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_UINT32_T       = 13
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_UINT64_T       = 14
    INTEGER(KIND=C_INT), PARAMETER :: MDI_DOUBLE         = 2
    INTEGER(KIND=C_INT), PARAMETER :: MDI_CHAR           = 3
+   INTEGER(KIND=C_INT), PARAMETER :: MDI_FLOAT          = 4
    INTEGER(KIND=C_INT), PARAMETER :: MDI_BYTE           = 6
 
    INTEGER(KIND=C_INT), PARAMETER :: MDI_TCP            = 1
@@ -258,12 +267,11 @@ MODULE MDI
 
   INTERFACE
 
-     FUNCTION MDI_Init_(options, world_comm) bind(c, name="MDI_Init")
+     FUNCTION MDI_Init_with_options_(options) bind(c, name="MDI_Init_with_options")
        USE, INTRINSIC :: iso_c_binding
        CHARACTER(C_CHAR)                        :: options(*)
-       INTEGER(KIND=C_INT)                      :: world_comm
-       INTEGER(KIND=C_INT)                      :: MDI_Init_
-     END FUNCTION MDI_Init_
+       INTEGER(KIND=C_INT)                      :: MDI_Init_with_options_
+     END FUNCTION MDI_Init_with_options_
 
      FUNCTION MDI_Accept_Communicator_(comm) bind(c, name="MDI_Accept_Communicator")
        USE, INTRINSIC :: iso_c_binding
@@ -311,12 +319,12 @@ MODULE MDI
        INTEGER(KIND=C_INT)                      :: MDI_Get_Role_
      END FUNCTION MDI_Get_Role_
 
-     SUBROUTINE MDI_Set_Execute_Command_Func(command_func, class_obj, ierr)
+     SUBROUTINE MDI_Set_Execute_Command_Func_(command_func, class_obj, ierr)
        USE MDI_INTERNAL
        PROCEDURE(execute_command)               :: command_func 
        TYPE(C_PTR), VALUE                       :: class_obj
        INTEGER, INTENT(OUT)                     :: ierr
-     END SUBROUTINE MDI_Set_Execute_Command_Func
+     END SUBROUTINE MDI_Set_Execute_Command_Func_
 
      FUNCTION MDI_Register_Node_(node) bind(c, name="MDI_Register_Node")
        USE, INTRINSIC :: iso_c_binding
@@ -413,23 +421,34 @@ MODULE MDI
        INTEGER(KIND=C_INT)                      :: MDI_Get_Callback_
      END FUNCTION MDI_Get_Callback_
 
+     FUNCTION MDI_MPI_get_world_comm_(world_comm) bind(c, name="MDI_MPI_get_world_comm")
+       USE, INTRINSIC :: iso_c_binding
+       TYPE(C_PTR), VALUE                       :: world_comm
+       INTEGER(KIND=C_INT)                      :: MDI_MPI_get_world_comm_
+     END FUNCTION MDI_MPI_get_world_comm_
+
+     FUNCTION MDI_MPI_set_world_comm_(world_comm) bind(c, name="MDI_MPI_set_world_comm")
+       USE, INTRINSIC :: iso_c_binding
+       TYPE(C_PTR), VALUE                       :: world_comm
+       INTEGER(KIND=C_INT)                      :: MDI_MPI_set_world_comm_
+     END FUNCTION MDI_MPI_set_world_comm_
+
   END INTERFACE
 
 
 
 CONTAINS
 
-    SUBROUTINE MDI_Init(foptions, fworld_comm, ierr)
+    SUBROUTINE MDI_Init(foptions, ierr)
       IMPLICIT NONE
 #if MDI_WINDOWS
       !GCC$ ATTRIBUTES DLLEXPORT :: MDI_Init
       !DEC$ ATTRIBUTES DLLEXPORT :: MDI_Init
 #endif
       CHARACTER(LEN=*), INTENT(IN) :: foptions
-      INTEGER, INTENT(INOUT) :: fworld_comm
       INTEGER, INTENT(OUT) :: ierr
 
-      ierr = MDI_Init_( TRIM(foptions)//" _language Fortran"//c_null_char, fworld_comm )
+      ierr = MDI_Init_with_options_( TRIM(foptions)//" _language Fortran"//c_null_char )
     END SUBROUTINE MDI_Init
 
     SUBROUTINE MDI_Accept_Communicator(communicator, ierr)
@@ -937,27 +956,54 @@ CONTAINS
       fcallback = str_c_to_f(ccallback, MDI_COMMAND_LENGTH)
     END SUBROUTINE MDI_Get_Callback
 
-END MODULE
+    SUBROUTINE MDI_MPI_get_world_comm(fworld_comm, ierr)
+      IMPLICIT NONE
+#if MDI_WINDOWS
+      !GCC$ ATTRIBUTES DLLEXPORT :: MDI_MPI_get_world_comm
+      !DEC$ ATTRIBUTES DLLEXPORT :: MDI_MPI_get_world_comm
+#endif
+      INTEGER, INTENT(OUT) :: fworld_comm
+      INTEGER, INTENT(OUT) :: ierr
 
+      INTEGER(KIND=C_INT), TARGET :: cworld_comm
 
+      cworld_comm = fworld_comm
+      ierr = MDI_MPI_get_world_comm_( c_loc(cworld_comm) )
+      fworld_comm = cworld_comm
+    END SUBROUTINE MDI_MPI_get_world_comm
 
+    SUBROUTINE MDI_MPI_set_world_comm(fworld_comm, ierr)
+      IMPLICIT NONE
+#if MDI_WINDOWS
+      !GCC$ ATTRIBUTES DLLEXPORT :: MDI_MPI_set_world_comm
+      !DEC$ ATTRIBUTES DLLEXPORT :: MDI_MPI_set_world_comm
+#endif
+      INTEGER, INTENT(IN) :: fworld_comm
+      INTEGER, INTENT(OUT) :: ierr
 
+      INTEGER(KIND=C_INT), TARGET :: cworld_comm
 
-SUBROUTINE MDI_Set_Execute_Command_Func(command_func, class_obj, ierr)
-  USE MDI_INTERNAL
+      cworld_comm = fworld_comm
+      ierr = MDI_MPI_set_world_comm_( c_loc(cworld_comm) )
+    END SUBROUTINE MDI_MPI_set_world_comm
+
+    SUBROUTINE MDI_Set_Execute_Command_Func(command_func, class_obj, ierr)
+      USE MDI_INTERNAL
 
 #if MDI_WINDOWS
-    !GCC$ ATTRIBUTES DLLEXPORT :: MDI_Set_Execute_Command_Func
-    !DEC$ ATTRIBUTES DLLEXPORT :: MDI_Set_Execute_Command_Func
+      !GCC$ ATTRIBUTES DLLEXPORT :: MDI_Set_Execute_Command_Func
+      !DEC$ ATTRIBUTES DLLEXPORT :: MDI_Set_Execute_Command_Func
 #endif
-    PROCEDURE(execute_command)               :: command_func
-    TYPE(C_PTR), VALUE                       :: class_obj
-    INTEGER, INTENT(OUT)                     :: ierr
-    INTEGER                                  :: current_code
+      PROCEDURE(execute_command)               :: command_func
+      TYPE(C_PTR), VALUE                       :: class_obj
+      INTEGER, INTENT(OUT)                     :: ierr
+      INTEGER                                  :: current_code
 
-    current_code = MDI_Get_Current_Code_()
+      current_code = MDI_Get_Current_Code_()
 
-    CALL add_execute_command(current_code, command_func)
-    ierr = MDI_Set_Execute_Command_Func_c( c_funloc(MDI_Execute_Command_f), class_obj )
+      CALL add_execute_command(current_code, command_func)
+      ierr = MDI_Set_Execute_Command_Func_c( c_funloc(MDI_Execute_Command_f), class_obj )
 
-END SUBROUTINE MDI_Set_Execute_Command_Func
+    END SUBROUTINE MDI_Set_Execute_Command_Func
+
+END MODULE
