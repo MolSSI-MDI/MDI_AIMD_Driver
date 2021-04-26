@@ -34,7 +34,7 @@
 // MDI version numbers
 #define MDI_MAJOR_VERSION_ 1
 #define MDI_MINOR_VERSION_ 2
-#define MDI_PATCH_VERSION_ 0
+#define MDI_PATCH_VERSION_ 8
 
 // length of an MDI command in characters
 #define MDI_COMMAND_LENGTH_ 12
@@ -181,6 +181,18 @@ extern MPI_Comm mdi_mpi_comm_world;
 /*! \brief Pointer to the MPI_Comm over which a Python plugin should run.
  * Only used for Python plugins */
 extern void* python_plugin_mpi_world_ptr;
+
+/*! \brief Unedited command-line options for currently running plugin */
+extern char* plugin_unedited_options;
+
+/*! \brief Command-line options for currently running plugin */
+extern char* plugin_options;
+
+/*! \brief Argument count for plugin command-line options */
+extern int plugin_argc;
+
+/*! \brief Argument vector for plugin command-line options */
+extern char** plugin_argv;
 
 /*! \brief Python callback pointer for MPI_Recv */
 extern int (*mpi4py_recv_callback)(void*, int, int, int, MDI_Comm_Type);

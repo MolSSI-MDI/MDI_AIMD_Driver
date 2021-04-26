@@ -136,22 +136,21 @@ int MDI_Init(int* argc, char*** argv)
     if ( ret == 0 ) {
       is_initialized = 1;
     }
-    return ret;
-
-    // deallocate the memory for the -mdi option
-    free(argv_in[mdi_iarg]);
-    free(argv_in[mdi_iarg + 1]);
+    else {
+      return ret;
+    }
 
     // pass out argc and argv, without the mdi-related options
     *argc = argc_in - 2;
     for (iarg=mdi_iarg+2; iarg < argc_in; iarg++) {
-      *argv[iarg - 2] = argv_in[iarg];
+      argv_in[iarg - 2] = argv_in[iarg];
     }
   }
   else {
     // The -mdi argument was not provided, so don't initialize
     return 0;
   }
+  return 0;
 }
 
 
@@ -1620,6 +1619,45 @@ int MDI_Get_Current_Code() {
  */
 int MDI_Get_plugin_mode(int* plugin_mode_ptr) {
   *plugin_mode_ptr = plugin_mode;
+  return 0;
+}
+
+
+/*! \brief Get plugin_argc
+ *
+ */
+int MDI_Plugin_get_argc(int* argc_ptr) {
+  if ( ! plugin_mode ) {
+    mdi_error("MDI_Plugin_get_argc called, but plugin mode is not active.");
+    return 1;
+  }
+  *argc_ptr = plugin_argc;
+  return 0;
+}
+
+
+/*! \brief Get plugin_argv
+ *
+ */
+int MDI_Plugin_get_argv(char*** argv_ptr) {
+  if ( ! plugin_mode ) {
+    mdi_error("MDI_Plugin_get_argv called, but plugin mode is not active.");
+    return 1;
+  }
+  *argv_ptr = plugin_argv;
+  return 0;
+}
+
+
+/*! \brief Get plugin_unedited_options
+ *
+ */
+int MDI_Plugin_get_args(char** args_ptr) {
+  if ( ! plugin_mode ) {
+    mdi_error("MDI_Plugin_get_args called, but plugin mode is not active.");
+    return 1;
+  }
+  *args_ptr = plugin_unedited_options;
   return 0;
 }
 
