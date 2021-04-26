@@ -7,7 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <unistd.h>
+#ifdef _WIN32
+  #include <winsock2.h>
+  #include <windows.h>
+#else
+  #include <unistd.h>
+#endif
 #include <stdint.h>
 #include "mdi_global.h"
 
@@ -36,6 +41,18 @@ MPI_Comm mdi_mpi_comm_world;
 /*! \brief Pointer to the MPI_Comm over which a Python plugin should run.
  * Only used for Python plugins */
 void* python_plugin_mpi_world_ptr = NULL;
+
+/*! \brief Unedited command-line options for currently running plugin */
+char* plugin_unedited_options = NULL;
+
+/*! \brief Command-line options for currently running plugin */
+char* plugin_options = NULL;
+
+/*! \brief Argument count for plugin command-line options */
+int plugin_argc = 0;
+
+/*! \brief Argument vector for plugin command-line options */
+char** plugin_argv = NULL;
 
 /*! \brief Python callback pointer for MPI_Recv */
 int (*mpi4py_recv_callback)(void*, int, int, int, MDI_Comm_Type);
@@ -253,7 +270,7 @@ int new_code() {
 
   // initialize the character buffer for the plugin path
   new_code.plugin_path = malloc(PLUGIN_PATH_LENGTH * sizeof(char));
-  snprintf(new_code.plugin_path, PLUGIN_PATH_LENGTH, "");
+  new_code.plugin_path[0] = '\0';
 
   // initialize the node vector
   vector* node_vec = malloc(sizeof(vector));
@@ -447,12 +464,22 @@ int communicator_delete(void* comm) {
  *                   Message printed before exiting.
  */
 int file_exists(const char* file_name) {
+#ifdef _WIN32
+  DWORD dwAttrib = GetFileAttributes(file_name);
+  if ( dwAttrib != INVALID_FILE_ATTRIBUTES && !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY) ) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+#else
   if ( access( file_name, F_OK ) == 0 ) {
     return 1;
   }
   else {
     return 0;
   }
+#endif
 }
 
 
