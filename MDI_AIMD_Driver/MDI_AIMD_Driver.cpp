@@ -85,6 +85,9 @@ int main(int argc, char **argv) {
   // Perform each iteration of the simulation
   for (int iiteration = 0; iiteration < niterations; iiteration++) {
 
+    // Have the MM engine proceed to the @FORCES node
+    MDI_Send_command("@FORCES", mm_comm);
+
     // Receive the coordinates from the MM engine
     MDI_Send_command("<COORDS", mm_comm);
     MDI_Recv(&coords, 3*natoms, MDI_DOUBLE, mm_comm);
@@ -92,10 +95,7 @@ int main(int argc, char **argv) {
     // Send the coordinates to the QM engine
     MDI_Send_command(">COORDS", qm_comm);
     MDI_Send(&coords, 3*natoms, MDI_DOUBLE, qm_comm);
- 
-    // Have the MM engine proceed to the @FORCES node
-    MDI_Send_command("@FORCES", mm_comm);
- 
+  
     // Get the QM energy
     MDI_Send_command("<ENERGY", qm_comm);
     MDI_Recv(&qm_energy, 1, MDI_DOUBLE, qm_comm);
@@ -111,9 +111,6 @@ int main(int argc, char **argv) {
     // Send the forces to the MM engine
     MDI_Send_command(">FORCES", mm_comm);
     MDI_Send(&forces, 3*natoms, MDI_DOUBLE, mm_comm);
- 
-    // Have the MM engine proceed to the @COORDS node, which completes the timestep
-    MDI_Send_command("@COORDS", mm_comm);
  
     cout << "timestep: " << iiteration << " " << mm_energy << " " << qm_energy << endl;
   }
