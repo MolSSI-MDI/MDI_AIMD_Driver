@@ -38,6 +38,6 @@ In the case of the `mpi.sh` executable, the driver's output is located in `MDI_A
 ## General usage instructions
 
 This driver assumes that the QM and MM engines are initialized with the same number of atoms, which **must** be listed in the same order in their respective input files.
-For example, if you wanted to run an AIMD simulation on a single water molecule, both engines must be launched using input files that specify their system as consisting of one oxygen atom and two hydrogen atoms, and the atoms must listed in the same order in the QM and MM input files (*i.e.* O, H, H)
+For example, if you wanted to run an AIMD simulation on a single water molecule, both engines must be launched using input files that specify their system as consisting of one oxygen atom and two hydrogen atoms, and the atoms must listed in the same order in the QM and MM input files (*i.e.* O, H, H).
 It is not necessary that the initial nuclear coordinates of the QM and MM engines be the same; the driver will replace the initial nuclear coordinates of the QM engine with the initial nuclear coordinates from the MM engine.
 If you are running a calculation with periodic boundary conditions, the QM and MM engines must be launched with the same periodic cell dimensions.
