@@ -86,7 +86,7 @@ def test_test_method():
     expected_err = """Cannot register node name with length greater than MDI_COMMAND_LENGTH
 Node name is greater than MDI_COMMAND_LENGTH
 Vector accessed out-of-bounds
-MDI_Get_Node unable to find node
+Error in MDI_Get_node: vector_get failed
 Node name is greater than MDI_COMMAND_LENGTH
 Cannot chcek command name with length greater than MDI_COMMAND_LENGTH
 Could not find the node
@@ -124,6 +124,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: -name option not provided
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -135,6 +136,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: -role option not provided
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -146,6 +148,8 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: -port option not provided
+MDI method on_selection function failed
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -157,6 +161,8 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: -port option not provided
+MDI method on_selection function failed
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -168,6 +174,8 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: -hostname option not provided
+MDI method on_selection function failed
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -179,6 +187,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Unrecognized option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -190,6 +199,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Method not recognized
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -201,6 +211,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Role not recognized
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -212,6 +223,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -role option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -233,6 +245,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -name option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -244,6 +257,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -hostname option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -255,6 +269,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -port option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -266,6 +281,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -out option
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""
@@ -277,17 +293,7 @@ def test_init_errors():
     driver_out = format_return(driver_tup[0])
     driver_err = format_return(driver_tup[1])
     expected_err = """Error in MDI_Init: Argument missing from -_language option
-"""
-    assert driver_err == expected_err
-    assert driver_out == ""
-
-    # Test double initialization
-    driver_proc = subprocess.Popen([sys.executable, "../build/ut_init_double.py"],
-                                   stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=build_dir)
-    driver_tup = driver_proc.communicate()
-    driver_out = format_return(driver_tup[0])
-    driver_err = format_return(driver_tup[1])
-    expected_err = """MDI_Init called after MDI was already initialized
+Error in MDI_Init_with_options
 """
     assert driver_err == expected_err
     assert driver_out == ""

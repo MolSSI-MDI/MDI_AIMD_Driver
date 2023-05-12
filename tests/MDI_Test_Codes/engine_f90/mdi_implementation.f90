@@ -6,7 +6,9 @@ MODULE MDI_IMPLEMENTATION
        MDI_Accept_communicator, MDI_Recv_command, MDI_Recv, &
        MDI_Set_execute_command_func, MDI_MPI_get_world_comm, MDI_DOUBLE, MDI_BYTE, &
        MDI_ENGINE, MDI_Get_role, MDI_Register_command, MDI_Register_node, &
-       MDI_Register_callback, MDI_COMMAND_LENGTH, MDI_MPI_get_world_comm
+       MDI_Register_callback, MDI_COMMAND_LENGTH, MDI_MPI_get_world_comm, &
+       MDI_Plugin_get_argc, MDI_Plugin_get_arg, MDI_Get_communicator, &
+       MDI_Get_method, MDI_Set_plugin_state
 
   IMPLICIT NONE
 
@@ -23,13 +25,17 @@ MODULE MDI_IMPLEMENTATION
 
 CONTAINS
 
-  FUNCTION MDI_Plugin_init_engine_f90() bind ( C, name="MDI_Plugin_init_engine_f90" )
+  FUNCTION MDI_Plugin_init_engine_f90(plugin_state) bind ( C, name="MDI_Plugin_init_engine_f90" )
+    TYPE(C_PTR), VALUE :: plugin_state
     INTEGER :: MDI_Plugin_init_engine_f90
     INTEGER :: ierr
+    INTEGER :: argc
+    INTEGER :: iarg
+    CHARACTER(LEN=1024) :: option
+    CHARACTER(LEN=1024) :: mdi_options
+    LOGICAL :: mdi_options_found
 
-    ! Call MDI_Init
-    world_comm = MPI_COMM_WORLD
-    CALL MDI_Init("-role ENGINE -method LINK -name MM", ierr)
+    CALL MDI_Set_plugin_state(plugin_state, ierr)
 
     ! Get the MPI intra-communicator over which this plugin will run
     CALL MDI_MPI_get_world_comm(world_comm, ierr);
@@ -62,6 +68,7 @@ CONTAINS
     CALL MDI_Register_command("@DEFAULT", "EXIT", ierr)
     CALL MDI_Register_command("@DEFAULT", "<NATOMS", ierr)
     CALL MDI_Register_command("@DEFAULT", "<COORDS", ierr)
+    CALL MDI_Register_command("@DEFAULT", ">COORDS", ierr)
     CALL MDI_Register_command("@DEFAULT", "<FORCES", ierr)
     CALL MDI_Register_command("@DEFAULT", "<FORCES_B", ierr)
     CALL MDI_Register_node("@FORCES", ierr)
@@ -74,14 +81,16 @@ CONTAINS
     CALL MDI_Accept_communicator(comm, ierr)
 
     ! Set the generic execute_command function
-    CALL MDI_Set_execute_command_func(generic_command, class_obj, ierr)
+    CALL MDI_Set_execute_command_func(c_funloc(generic_command), class_obj, ierr)
 
   END SUBROUTINE initialize_mdi
 
 
   SUBROUTINE respond_to_commands()
     CHARACTER(len=:), ALLOCATABLE :: command
-    INTEGER :: ierr
+    INTEGER                       :: ierr
+
+    TYPE(C_PTR)                   :: class_obj
 
     ALLOCATE( character(MDI_COMMAND_LENGTH) :: command )
 
@@ -92,7 +101,7 @@ CONTAINS
        CALL MDI_Recv_command(command, comm, ierr)
        CALL MPI_Bcast(command, MDI_COMMAND_LENGTH, MPI_CHAR, 0, world_comm, ierr)
 
-       CALL execute_command(command, comm, ierr)
+       ierr = execute_command(command, comm, class_obj)
 
        IF ( terminate_flag ) EXIT
 
@@ -103,16 +112,33 @@ CONTAINS
   END SUBROUTINE respond_to_commands
 
 
-  SUBROUTINE execute_command(command, comm, ierr)
+  FUNCTION execute_command(command, comm, class_obj)
     IMPLICIT NONE
 
+    !CHARACTER(LEN=1), INTENT(IN)  :: command_in(MDI_COMMAND_LENGTH)
     CHARACTER(LEN=*), INTENT(IN)  :: command
     INTEGER, INTENT(IN)           :: comm
-    INTEGER, INTENT(OUT)          :: ierr
+    TYPE(C_PTR), VALUE            :: class_obj
+    INTEGER(KIND=C_INT)           :: execute_command
 
-    INTEGER                       :: icoord
+    INTEGER                       :: icoord, ierr
     INTEGER                       :: natoms, count
     DOUBLE PRECISION, ALLOCATABLE :: coords(:), forces(:)
+
+    INTEGER func_comm, func_method
+
+    !CHARACTER(LEN=MDI_COMMAND_LENGTH) :: command
+    
+    !command = transfer( command_in, command )
+
+    ! Confirm that MDI_Get_communicator works
+	CALL MDI_Get_communicator(func_comm, 0, ierr)
+	IF ( func_comm .ne. comm ) THEN
+	   STOP 1
+	END IF
+
+    ! Confirm that MDI_Get_method runs
+	CALL MDI_Get_method(func_method, comm, ierr)
 
     ! set dummy molecular properties
     natoms = 10
@@ -132,6 +158,8 @@ CONTAINS
        CALL MDI_Send(natoms, 1, MDI_INT, comm, ierr)
     CASE( "<COORDS" )
        CALL MDI_Send(coords, 3 * natoms, MDI_DOUBLE, comm, ierr)
+    CASE( ">COORDS" )
+       CALL MDI_Recv(coords, 3 * natoms, MDI_DOUBLE, comm, ierr)
     CASE( "<FORCES" )
        CALL MDI_Send(forces, 3 * natoms, MDI_DOUBLE, comm, ierr)
     CASE( "<FORCES_B" )
@@ -143,7 +171,7 @@ CONTAINS
 
     DEALLOCATE( coords, forces )
 
-    ierr = 0
-  END SUBROUTINE execute_command
+    execute_command = 0
+  END FUNCTION execute_command
 
 END MODULE MDI_IMPLEMENTATION

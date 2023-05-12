@@ -46,6 +46,14 @@ int code_for_plugin_instance(void* mpi_comm_ptr, MDI_Comm mdi_comm, void* class_
   if ( MDI_Recv(coords, 3*natoms, MDI_DOUBLE, mdi_comm) != 0 ) {
     mpi_error("MDI_Recv returned non-zero exit code.");
   }
+
+  // Send the nuclear coordinates
+  if ( MDI_Send_command(">COORDS", mdi_comm) != 0 ) {
+    mpi_error("MDI_Send_command returned non-zero exit code.");
+  }
+  if ( MDI_Send(coords, 3*natoms, MDI_DOUBLE, mdi_comm) != 0 ) {
+    mpi_error("MDI_Send returned non-zero exit code.");
+  }
   delete[] coords;
 
   if ( my_rank == 0 ) {
@@ -73,6 +81,20 @@ int main(int argc, char **argv) {
   ret = MDI_Init(&argc, &argv);
   if ( ret != 0 ) {
     throw std::runtime_error("The MDI library was not initialized correctly.");
+  }
+
+  // Check for an "-earlyreturn" option
+  bool earlyreturn = false;
+  for ( int iarg=1; iarg < argc; iarg++ ) {
+    if ( strcmp(argv[iarg],"-earlyreturn") == 0 ) {
+      earlyreturn = true;
+    }
+  }
+  
+  // If the earlyreturn flag was set, return now
+  if ( earlyreturn ) {
+    MPI_Finalize();
+    return 0;
   }
 
   // Confirm that MDI was initialized successfully
@@ -112,7 +134,7 @@ int main(int argc, char **argv) {
 
       // Ensure that the argument to the -driver_nranks option was provided
       if ( argc-iarg < 2 ) {
-	mpi_error("The -driver_nranks argument was not provided.");
+        mpi_error("The -driver_nranks argument was not provided.");
       }
 
       // Set driver_nranks
@@ -125,7 +147,7 @@ int main(int argc, char **argv) {
 
       // Ensure that the argument to the -plugin_nranks option was provided
       if ( argc-iarg < 2 ) {
-	mpi_error("The -plugin_nranks argument was not provided.");
+        mpi_error("The -plugin_nranks argument was not provided.");
       }
 
       // Set driver_nranks
@@ -138,7 +160,7 @@ int main(int argc, char **argv) {
 
       // Ensure that the argument to the -plugin_name option was provided
       if ( argc-iarg < 2 ) {
-	mpi_error("The -plugin_name argument was not provided.");
+        mpi_error("The -plugin_name argument was not provided.");
       }
 
       // Set driver_nranks
@@ -199,6 +221,30 @@ int main(int argc, char **argv) {
     if ( intra_rank == 0 ) {
       std::cout << "I am engine instance: " << color << std::endl;
     }
+
+    ////////////////////////////////////////////////////////
+/*
+    // Initialize and run an instance of the engine library
+    MDI_Comm mdi_comm;
+    if ( MDI_Open_plugin(plugin_name,
+			   "-mdi \"-name MM -role ENGINE -method LINK\"",
+			   &intra_comm,
+			   &mdi_comm) != 0 ) {
+      mpi_error("MDI_Launch_plugin returned non-zero exit code.");
+    }
+    char* engine_name = new char[MDI_NAME_LENGTH];
+    if ( MDI_Send_command("<NAME", mdi_comm) != 0 ) {
+      mpi_error("MDI_Send_command returned non-zero exit code.");
+    }
+    if ( MDI_Recv(engine_name, MDI_NAME_LENGTH, MDI_CHAR, mdi_comm) != 0 ) {
+      mpi_error("MDI_Recv returned non-zero exit code.");
+    }
+    if ( intra_rank == 0 ) {
+      std::cout << "TEST VALUE: " << engine_name << std::endl;
+    }
+    MDI_Close_plugin(mdi_comm);
+*/
+    ////////////////////////////////////////////////////////
 
     // Initialize and run an instance of the engine library
     if ( MDI_Launch_plugin(plugin_name,

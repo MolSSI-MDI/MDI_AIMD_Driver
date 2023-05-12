@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['world_5frank',['world_rank',['../mdi__mpi_8c.html#a0be0ed3102aab1d72782301d75cf570b',1,'world_rank():&#160;mdi_mpi.c'],['../mdi__mpi_8h.html#a0be0ed3102aab1d72782301d75cf570b',1,'world_rank():&#160;mdi_mpi.c']]],
-  ['world_5fsize',['world_size',['../mdi__mpi_8c.html#ab8411355a7d80016be6edcce3437b978',1,'world_size():&#160;mdi_mpi.c'],['../mdi__mpi_8h.html#ab8411355a7d80016be6edcce3437b978',1,'world_size():&#160;mdi_mpi.c']]]
+  ['tcp_5finitialized_645',['tcp_initialized',['../structcode__struct.html#a2385319a0ba5680e6c317d9538a96b0c',1,'code_struct']]],
+  ['tcp_5fsocket_646',['tcp_socket',['../structcode__struct.html#a973b57f18427b4ca8ab0bcd65bad51f5',1,'code_struct']]],
+  ['test_5finitialized_647',['test_initialized',['../structcode__struct.html#a9789a2296eff425d696173c6b07e4131',1,'code_struct']]]
 ];

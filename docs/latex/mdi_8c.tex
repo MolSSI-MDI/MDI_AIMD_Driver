@@ -1,5 +1,5 @@
-\hypertarget{mdi_8c}{}\doxysection{/\+Users/tbarnes/\+Documents/mdi/\+M\+D\+I\+\_\+\+Library/\+M\+D\+I\+\_\+\+Library/mdi.c File Reference}
-\label{mdi_8c}\index{/Users/tbarnes/Documents/mdi/MDI\_Library/MDI\_Library/mdi.c@{/Users/tbarnes/Documents/mdi/MDI\_Library/MDI\_Library/mdi.c}}
+\hypertarget{mdi_8c}{}\doxysection{/repo/build/\+M\+D\+I\+\_\+\+Library/\+M\+D\+I\+\_\+\+Library/mdi.c File Reference}
+\label{mdi_8c}\index{/repo/build/MDI\_Library/MDI\_Library/mdi.c@{/repo/build/MDI\_Library/MDI\_Library/mdi.c}}
 
 
 Functions callable by users of the Mol\+S\+SI Driver Interface.  
@@ -15,18 +15,23 @@ Functions callable by users of the Mol\+S\+SI Driver Interface.
 {\ttfamily \#include \char`\"{}mdi\+\_\+mpi.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}mdi\+\_\+lib.\+h\char`\"{}}\newline
 {\ttfamily \#include \char`\"{}physconst.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}elements.\+h\char`\"{}}\newline
 \doxysubsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
 int \mbox{\hyperlink{mdi_8c_a9f26d9f67413c6c194a2f5e4bd69b911}{M\+D\+I\+\_\+\+Init}} (int $\ast$argc, char $\ast$$\ast$$\ast$argv)
 \begin{DoxyCompactList}\small\item\em Initialize communication through the M\+DI library. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a3af6852f1a469d0a6bd8113a3ff0260d}{M\+D\+I\+\_\+\+Init\+\_\+with\+\_\+argv}} (int $\ast$argc, char $\ast$$\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em Initialize communication through the M\+DI library. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_ac3f53714251da5894df2f52a4100b990}{M\+D\+I\+\_\+\+Init\+\_\+code}} ()
+\begin{DoxyCompactList}\small\item\em Initialize a code structure for the M\+DI library. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a26633c213f6f1c08d5795f2ffffde620}{M\+D\+I\+\_\+\+Init\+\_\+with\+\_\+options}} (const char $\ast$options)
 \begin{DoxyCompactList}\small\item\em Initialize communication through the M\+DI library. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a82aaa736f9d174c7663ad80a97089767}{M\+D\+I\+\_\+\+Initialized}} (int $\ast$flag)
 \begin{DoxyCompactList}\small\item\em Indicates whether M\+D\+I\+\_\+\+Init has been called. \end{DoxyCompactList}\item 
-M\+D\+I\+\_\+\+Comm \mbox{\hyperlink{mdi_8c_a27002da8665201b9d0e9bdb4f51f64d8}{M\+D\+I\+\_\+\+Accept\+\_\+\+Communicator}} (M\+D\+I\+\_\+\+Comm $\ast$comm)
+int \mbox{\hyperlink{mdi_8c_ab4e0f741600ef03e08545417b089434b}{M\+D\+I\+\_\+\+Accept\+\_\+\+Communicator}} (M\+D\+I\+\_\+\+Comm $\ast$comm)
 \begin{DoxyCompactList}\small\item\em Accept a new M\+DI communicator. \end{DoxyCompactList}\item 
-M\+D\+I\+\_\+\+Comm \mbox{\hyperlink{mdi_8c_a21a41738e9b43ab70c977f8ce63c0957}{M\+D\+I\+\_\+\+Accept\+\_\+communicator}} (M\+D\+I\+\_\+\+Comm $\ast$comm)
+int \mbox{\hyperlink{mdi_8c_a91c05f57c87bd5ca8aad65d2d6c3ca72}{M\+D\+I\+\_\+\+Accept\+\_\+communicator}} (M\+D\+I\+\_\+\+Comm $\ast$comm)
 \begin{DoxyCompactList}\small\item\em Accept a new M\+DI communicator. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a7bebce6d5fa91ee99a34fdcc5dcaedea}{M\+D\+I\+\_\+\+Send}} (const void $\ast$buf, int count, M\+D\+I\+\_\+\+Datatype datatype, M\+D\+I\+\_\+\+Comm comm)
 \begin{DoxyCompactList}\small\item\em Send data through the M\+DI connection. \end{DoxyCompactList}\item 
@@ -44,14 +49,23 @@ int \mbox{\hyperlink{mdi_8c_aa1ccf61d45e842b50d72084735cb984a}{M\+D\+I\+\_\+\+Co
 \begin{DoxyCompactList}\small\item\em Determine the conversion factor between two units. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_aa66cd1dab228089f35563dba18f36d08}{M\+D\+I\+\_\+\+Conversion\+\_\+factor}} (const char $\ast$in\+\_\+unit, const char $\ast$out\+\_\+unit, double $\ast$conv)
 \begin{DoxyCompactList}\small\item\em Determine the conversion factor between two units. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mdi_8c_a4192271f6e3d7e6bc7939223be2ba8a8}\label{mdi_8c_a4192271f6e3d7e6bc7939223be2ba8a8}} 
+int {\bfseries M\+D\+I\+\_\+\+String\+\_\+to\+\_\+atomic\+\_\+number} (const char $\ast$element\+\_\+symbol, int $\ast$atomic\+\_\+number)
+\item 
 int \mbox{\hyperlink{mdi_8c_ab73b88af2ee5e9bbb5d7dfb8e84068a1}{M\+D\+I\+\_\+\+Get\+\_\+\+Role}} (int $\ast$role)
 \begin{DoxyCompactList}\small\item\em Get the role of the code. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a83a9b8af3ed1ae53dd6af69a14a00deb}{M\+D\+I\+\_\+\+Get\+\_\+role}} (int $\ast$role)
 \begin{DoxyCompactList}\small\item\em Get the role of the code. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a5db83532c511b9b4b00b1e711adaa477}{M\+D\+I\+\_\+\+Get\+\_\+method}} (int $\ast$\mbox{\hyperlink{structmethod__struct}{method}}, M\+D\+I\+\_\+\+Comm comm)
+\begin{DoxyCompactList}\small\item\em Get the communication method of a communicator. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a48961793c41fbc8d8f2bdf1085fd7706}{M\+D\+I\+\_\+\+Get\+\_\+communicator}} (M\+D\+I\+\_\+\+Comm $\ast$comm, int index)
+\begin{DoxyCompactList}\small\item\em Get the previously accepted M\+DI communicator at a specific index in the array of all communicators. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mdi_8c_a8d6c16394da02c29977001487ce109f2}{M\+D\+I\+\_\+\+Set\+\_\+\+World\+\_\+\+Size}} (int world\+\_\+size\+\_\+in)
 \begin{DoxyCompactList}\small\item\em Set the size of M\+P\+I\+\_\+\+C\+O\+M\+M\+\_\+\+W\+O\+R\+LD. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{mdi_8c_a4b95094e7410c4d58739245172019100}{M\+D\+I\+\_\+\+Set\+\_\+\+World\+\_\+\+Rank}} (int world\+\_\+rank\+\_\+in)
 \begin{DoxyCompactList}\small\item\em Set the rank of this process within M\+P\+I\+\_\+\+C\+O\+M\+M\+\_\+\+W\+O\+R\+LD. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_ad82e0e1e83bcbb42aa8f23f96e8807e4}{M\+D\+I\+\_\+\+Get\+\_\+intra\+\_\+rank}} (int intra\+\_\+rank\+\_\+out)
+\begin{DoxyCompactList}\small\item\em Get the rank of this process within the M\+PI intra-\/communicator for the current code. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_ada45c73f15462764df0ac9e733b7d18e}{M\+D\+I\+\_\+\+Register\+\_\+\+Node}} (const char $\ast$node\+\_\+name)
 \begin{DoxyCompactList}\small\item\em Register a node. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_ae191ab5848b0c586643f63412a18dcf2}{M\+D\+I\+\_\+\+Register\+\_\+node}} (const char $\ast$node\+\_\+name)
@@ -106,21 +120,40 @@ int \mbox{\hyperlink{mdi_8c_af305dbbeb2de3f39edb26c5287ecd845}{M\+D\+I\+\_\+\+M\
 \begin{DoxyCompactList}\small\item\em Set the M\+PI communicator that spans the single code corresponding to the calling rank. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_abea4cba4cc69b71123511d34beb28277}{M\+D\+I\+\_\+\+Launch\+\_\+plugin}} (const char $\ast$plugin\+\_\+name, const char $\ast$options, void $\ast$mpi\+\_\+comm\+\_\+ptr, M\+D\+I\+\_\+\+Driver\+\_\+node\+\_\+callback\+\_\+t driver\+\_\+node\+\_\+callback, void $\ast$driver\+\_\+callback\+\_\+object)
 \begin{DoxyCompactList}\small\item\em Launch an M\+DI plugin instance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a7539c31ccab77c6d55cb0c8e23f5fdf5}{M\+D\+I\+\_\+\+Open\+\_\+plugin}} (const char $\ast$plugin\+\_\+name, const char $\ast$options, void $\ast$mpi\+\_\+comm\+\_\+ptr, M\+D\+I\+\_\+\+Comm $\ast$mdi\+\_\+comm\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Open an M\+DI plugin instance in the background. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a06a206673477f102e076f32f0bd0aac3}{M\+D\+I\+\_\+\+Close\+\_\+plugin}} (M\+D\+I\+\_\+\+Comm mdi\+\_\+comm)
+\begin{DoxyCompactList}\small\item\em Close an M\+DI plugin instance. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a4169a23467c48cde8a261efdfb3072b1}{M\+D\+I\+\_\+\+Set\+\_\+\+Execute\+\_\+\+Command\+\_\+\+Func}} (int($\ast$generic\+\_\+command)(const char $\ast$, M\+D\+I\+\_\+\+Comm, void $\ast$), void $\ast$class\+\_\+object)
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+D\+I\+\_\+\+Execute\+\_\+\+Command. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_af0d4ca403e5b9d4e4e5d0f7a63ab346c}{M\+D\+I\+\_\+\+Set\+\_\+execute\+\_\+command\+\_\+func}} (int($\ast$generic\+\_\+command)(const char $\ast$, M\+D\+I\+\_\+\+Comm, void $\ast$), void $\ast$class\+\_\+object)
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+D\+I\+\_\+\+Execute\+\_\+\+Command. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mdi_8c_a98666e4b2400343ad606fe86c83ad3f2}\label{mdi_8c_a98666e4b2400343ad606fe86c83ad3f2}} 
+int {\bfseries M\+D\+I\+\_\+\+Set\+\_\+plugin\+\_\+state} (void $\ast$state)
+\item 
+int \mbox{\hyperlink{mdi_8c_a68ecdd9f61501109910f493a1ed4b6dd}{M\+D\+I\+\_\+\+Set\+\_\+plugin\+\_\+state\+\_\+internal}} (void $\ast$state)
+\begin{DoxyCompactList}\small\item\em Set the language-\/based callback for when a code is destroyed. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a5d1fb9bd79c1c84057455fd5dc974f19}{M\+D\+I\+\_\+\+Set\+\_\+on\+\_\+destroy\+\_\+code}} (int($\ast$func)(int))
+\begin{DoxyCompactList}\small\item\em Set the language-\/based callback for when a code is destroyed. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a8272503f977c698ccd8cee1e7c5c7b3e}{M\+D\+I\+\_\+\+Get\+\_\+\+Current\+\_\+\+Code}} ()
 \begin{DoxyCompactList}\small\item\em Get the current code. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{mdi_8c_aba6884e311ea54778297805267a91e16}{M\+D\+I\+\_\+\+Get\+\_\+plugin\+\_\+mode}} (int $\ast$plugin\+\_\+mode\+\_\+ptr)
-\begin{DoxyCompactList}\small\item\em Get whether plugin mode is active. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{mdi_8c_a57509800ae93333f382d0cdec96179f3}{M\+D\+I\+\_\+\+Get\+\_\+python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr}} (void $\ast$$\ast$python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr\+\_\+ptr)
+int \mbox{\hyperlink{mdi_8c_ab4e86ef9c4bb12e90d8e07be2e5cf6d9}{M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+argc}} (int $\ast$argc\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Get plugin\+\_\+argc. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_abebb0265894fbfcced765d9688719355}{M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+argv}} (char $\ast$$\ast$$\ast$argv\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Get plugin\+\_\+argv. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a4b7c5d301e092db15578ae745ffa0913}{M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+args}} (char $\ast$$\ast$args\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Get plugin\+\_\+unedited\+\_\+options. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_ac69f5e1cea7115d324cadd207c216081}{M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+arg}} (int index, char $\ast$$\ast$arg\+\_\+ptr)
+\begin{DoxyCompactList}\small\item\em Get a specific element from plugin\+\_\+argv. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a3bfe05f7b7e6c30738abe442de623128}{M\+D\+I\+\_\+\+Get\+\_\+python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr}} (void $\ast$$\ast$python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr\+\_\+ptr, void $\ast$state\+\_\+in)
 \begin{DoxyCompactList}\small\item\em Get the Python plugin M\+PI communicator. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_acb8c9a81546e101e143ff9b4dbb77f66}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Recv\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+recv)(void $\ast$, int, int, int, M\+D\+I\+\_\+\+Comm))
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Recv when using mpi4py. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a1b35deeba881ba247f54c0c7a7fa9541}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Send\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+send)(void $\ast$, int, int, int, M\+D\+I\+\_\+\+Comm))
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Send when using mpi4py. \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{mdi_8c_ac6f51e08d052f94e2ffb53ff02e0a5e1}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Gather\+\_\+\+Names\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+gather\+\_\+names)(void $\ast$, void $\ast$))
+int \mbox{\hyperlink{mdi_8c_a9db0aed6228db1309a14926b7009f064}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Allgather\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+allgather)(void $\ast$, void $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for gathering M\+DI versions when using mpi4py. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a5cf6a719d2fbfb403b16ec7b282a2f4b}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Gather\+\_\+\+Names\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+gather\+\_\+names)(void $\ast$, void $\ast$, int $\ast$, int $\ast$))
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for gathering code names when using mpi4py. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_a90b4daf2a55ea45f18c8120e61bf09dd}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Split\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+split)(int, int, M\+D\+I\+\_\+\+Comm, int))
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Split when using mpi4py. \end{DoxyCompactList}\item 
@@ -129,7 +162,17 @@ int \mbox{\hyperlink{mdi_8c_a53e71934347df0c03fe72e4ace5037b3}{M\+D\+I\+\_\+\+Se
 int \mbox{\hyperlink{mdi_8c_adc63c403ea182348f1949b6fbec8f788}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Size\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+size)(int))
 \begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Comm\+\_\+size when using mpi4py. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{mdi_8c_aaf70b8b181eca7c16d282e548b029ad6}{M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Barrier\+\_\+\+Callback}} (int($\ast$mpi4py\+\_\+barrier)(int))
-\begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Barrier when using mpi4py. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+P\+I\+\_\+\+Barrier when using mpi4py. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_af1f1e65f7942e4c85bc8353b93c10efc}{M\+D\+I\+\_\+\+Set\+\_\+\+Launch\+\_\+\+Plugin\+\_\+\+Callback}} (int($\ast$launch\+\_\+plugin)(void $\ast$, void $\ast$, void $\ast$, int))
+\begin{DoxyCompactList}\small\item\em Set the callback M\+DI uses for M\+D\+I\+\_\+\+Plugin\+\_\+init when the driver is in Python. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a9ecbc257bc3d76f8d108f6b720fd579a}{M\+D\+I\+\_\+\+Set\+\_\+plugin\+\_\+language}} (int language, void $\ast$plugin\+\_\+state)
+\begin{DoxyCompactList}\small\item\em Set the language of an M\+DI plugin. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_a17be79ed7246c8b78975987fe4b275fe}{M\+D\+I\+\_\+\+Set\+\_\+language\+\_\+execute\+\_\+command}} (int($\ast$execute\+\_\+command)(void $\ast$, M\+D\+I\+\_\+\+Comm, void $\ast$))
+\begin{DoxyCompactList}\small\item\em Set the language execute\+\_\+command function needed by a language wrapper. \end{DoxyCompactList}\item 
+M\+D\+I\+\_\+\+Driver\+\_\+node\+\_\+callback\+\_\+t \mbox{\hyperlink{mdi_8c_ab6da1b33f517717441e44e37dd83c8fe}{M\+D\+I\+\_\+\+Get\+\_\+language\+\_\+driver\+\_\+callback}} ()
+\begin{DoxyCompactList}\small\item\em Get the language driver callback needed by a language wrapper. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{mdi_8c_acbd5b1e7f5535b1bfdd1b1a39e091805}{M\+D\+I\+\_\+\+Set\+\_\+language\+\_\+driver\+\_\+callback}} (M\+D\+I\+\_\+\+Driver\+\_\+node\+\_\+callback\+\_\+t callback)
+\begin{DoxyCompactList}\small\item\em Set the language-\/specific driver\+\_\+callback function needed by a language wrapper. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Variables}
 \begin{DoxyCompactItemize}
 \item 
@@ -201,6 +244,9 @@ const int \mbox{\hyperlink{mdi_8c_ac9eaa23189e2bf8a92c2136ee0112a87}{M\+D\+I\+\_
 \begin{DoxyCompactList}\small\item\em M\+PI communication method. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{mdi_8c_ac545ac5cbde8c46c65c073000d395d51}\label{mdi_8c_ac545ac5cbde8c46c65c073000d395d51}} 
 const int \mbox{\hyperlink{mdi_8c_ac545ac5cbde8c46c65c073000d395d51}{M\+D\+I\+\_\+\+L\+I\+NK}} = M\+D\+I\+\_\+\+L\+I\+N\+K\+\_\+
+\begin{DoxyCompactList}\small\item\em Library communication method (deprecated) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{mdi_8c_a7be0d3fc0201b6e36706483013555858}\label{mdi_8c_a7be0d3fc0201b6e36706483013555858}} 
+const int \mbox{\hyperlink{mdi_8c_a7be0d3fc0201b6e36706483013555858}{M\+D\+I\+\_\+\+P\+L\+U\+G\+IN}} = M\+D\+I\+\_\+\+L\+I\+N\+K\+\_\+
 \begin{DoxyCompactList}\small\item\em Library communication method. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{mdi_8c_ab0752d8d30929c35fa8297e1a3127068}\label{mdi_8c_ab0752d8d30929c35fa8297e1a3127068}} 
 const int \mbox{\hyperlink{mdi_8c_ab0752d8d30929c35fa8297e1a3127068}{M\+D\+I\+\_\+\+T\+E\+ST}} = M\+D\+I\+\_\+\+T\+E\+S\+T\+\_\+
@@ -210,7 +256,9 @@ const int \mbox{\hyperlink{mdi_8c_a3b915c702251d2418e8daec9f923313a}{M\+D\+I\+\_
 \begin{DoxyCompactList}\small\item\em Driver role type. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{mdi_8c_aa3a524bd924c365be0f92734d66af39f}\label{mdi_8c_aa3a524bd924c365be0f92734d66af39f}} 
 const int \mbox{\hyperlink{mdi_8c_aa3a524bd924c365be0f92734d66af39f}{M\+D\+I\+\_\+\+E\+N\+G\+I\+NE}} = M\+D\+I\+\_\+\+E\+N\+G\+I\+N\+E\+\_\+
-\begin{DoxyCompactList}\small\item\em Engine role type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Engine role type. \end{DoxyCompactList}\item 
+int($\ast$)(void $\ast$, M\+D\+I\+\_\+\+Comm, void $\ast$) \mbox{\hyperlink{mdi_8c_a5e4ead94fc691b76201e41e0c4404d96}{M\+D\+I\+\_\+\+Get\+\_\+language\+\_\+execute\+\_\+command}} (M\+D\+I\+\_\+\+Comm comm)
+\begin{DoxyCompactList}\small\item\em Get the language execute\+\_\+command function needed by a language wrapper. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -219,21 +267,21 @@ Functions callable by users of the Mol\+S\+SI Driver Interface.
 
 
 \doxysubsection{Function Documentation}
-\mbox{\Hypertarget{mdi_8c_a27002da8665201b9d0e9bdb4f51f64d8}\label{mdi_8c_a27002da8665201b9d0e9bdb4f51f64d8}} 
+\mbox{\Hypertarget{mdi_8c_ab4e0f741600ef03e08545417b089434b}\label{mdi_8c_ab4e0f741600ef03e08545417b089434b}} 
 \index{mdi.c@{mdi.c}!MDI\_Accept\_Communicator@{MDI\_Accept\_Communicator}}
 \index{MDI\_Accept\_Communicator@{MDI\_Accept\_Communicator}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Accept\_Communicator()}{MDI\_Accept\_Communicator()}}
-{\footnotesize\ttfamily M\+D\+I\+\_\+\+Comm M\+D\+I\+\_\+\+Accept\+\_\+\+Communicator (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{comm }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Accept\+\_\+\+Communicator (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{comm }\end{DoxyParamCaption})}
 
 
 
 Accept a new M\+DI communicator. 
 
-The function returns an M\+D\+I\+\_\+\+Comm that describes a connection between two codes. If no new communicators are available, the function returns {\ttfamily M\+D\+I\+\_\+\+C\+O\+M\+M\+\_\+\+N\+U\+LL}. \mbox{\Hypertarget{mdi_8c_a21a41738e9b43ab70c977f8ce63c0957}\label{mdi_8c_a21a41738e9b43ab70c977f8ce63c0957}} 
+The function returns an M\+D\+I\+\_\+\+Comm that describes a connection between two codes. If no new communicators are available, the function returns {\ttfamily M\+D\+I\+\_\+\+C\+O\+M\+M\+\_\+\+N\+U\+LL}. \mbox{\Hypertarget{mdi_8c_a91c05f57c87bd5ca8aad65d2d6c3ca72}\label{mdi_8c_a91c05f57c87bd5ca8aad65d2d6c3ca72}} 
 \index{mdi.c@{mdi.c}!MDI\_Accept\_communicator@{MDI\_Accept\_communicator}}
 \index{MDI\_Accept\_communicator@{MDI\_Accept\_communicator}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Accept\_communicator()}{MDI\_Accept\_communicator()}}
-{\footnotesize\ttfamily M\+D\+I\+\_\+\+Comm M\+D\+I\+\_\+\+Accept\+\_\+communicator (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{comm }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Accept\+\_\+communicator (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{comm }\end{DoxyParamCaption})}
 
 
 
@@ -371,6 +419,29 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ in}}  & {\em comm} & M\+DI communicator of the engine. If comm is set to M\+D\+I\+\_\+\+C\+O\+M\+M\+\_\+\+N\+U\+LL, the function will check for the calling engine. \\
 \hline
 \mbox{\texttt{ out}}  & {\em flag} & On return, 1 if the node is supported and 0 otherwise. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a06a206673477f102e076f32f0bd0aac3}\label{mdi_8c_a06a206673477f102e076f32f0bd0aac3}} 
+\index{mdi.c@{mdi.c}!MDI\_Close\_plugin@{MDI\_Close\_plugin}}
+\index{MDI\_Close\_plugin@{MDI\_Close\_plugin}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Close\_plugin()}{MDI\_Close\_plugin()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Close\+\_\+plugin (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm}]{mdi\+\_\+comm }\end{DoxyParamCaption})}
+
+
+
+Close an M\+DI plugin instance. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plugin\+\_\+name} & Name of the plugin. \\
+\hline
+\mbox{\texttt{ in}}  & {\em options} & Command-\/line options for the plugin. \\
+\hline
+\mbox{\texttt{ in}}  & {\em mpi\+\_\+comm\+\_\+ptr} & Pointer to an M\+PI intra-\/communicator that spans all ranks that will run this plugin instance. \\
+\hline
+\mbox{\texttt{ out}}  & {\em mdi\+\_\+comm\+\_\+ptr} & Pointer to an M\+DI communicator for communication with the launched plugin. \\
 \hline
 \end{DoxyParams}
 \mbox{\Hypertarget{mdi_8c_aa1ccf61d45e842b50d72084735cb984a}\label{mdi_8c_aa1ccf61d45e842b50d72084735cb984a}} 
@@ -621,6 +692,25 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ out}}  & {\em name} & On return, the name of the command \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a48961793c41fbc8d8f2bdf1085fd7706}\label{mdi_8c_a48961793c41fbc8d8f2bdf1085fd7706}} 
+\index{mdi.c@{mdi.c}!MDI\_Get\_communicator@{MDI\_Get\_communicator}}
+\index{MDI\_Get\_communicator@{MDI\_Get\_communicator}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Get\_communicator()}{MDI\_Get\_communicator()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+communicator (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{comm,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+
+
+Get the previously accepted M\+DI communicator at a specific index in the array of all communicators. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em comm} & Value of the communicator. If no communicator exists at the given index, returns {\ttfamily M\+D\+I\+\_\+\+C\+O\+M\+M\+\_\+\+N\+U\+LL}. \\
+\hline
+\mbox{\texttt{ in}}  & {\em index} & Request the i\textquotesingle{}th communicator in the list of accepted and valid communicators. The list begins at {\ttfamily 0}. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{mdi_8c_a8272503f977c698ccd8cee1e7c5c7b3e}\label{mdi_8c_a8272503f977c698ccd8cee1e7c5c7b3e}} 
 \index{mdi.c@{mdi.c}!MDI\_Get\_Current\_Code@{MDI\_Get\_Current\_Code}}
 \index{MDI\_Get\_Current\_Code@{MDI\_Get\_Current\_Code}!mdi.c@{mdi.c}}
@@ -631,6 +721,54 @@ The function returns {\ttfamily 0} on a success.
 
 Get the current code. 
 
+\mbox{\Hypertarget{mdi_8c_ad82e0e1e83bcbb42aa8f23f96e8807e4}\label{mdi_8c_ad82e0e1e83bcbb42aa8f23f96e8807e4}} 
+\index{mdi.c@{mdi.c}!MDI\_Get\_intra\_rank@{MDI\_Get\_intra\_rank}}
+\index{MDI\_Get\_intra\_rank@{MDI\_Get\_intra\_rank}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Get\_intra\_rank()}{MDI\_Get\_intra\_rank()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+intra\+\_\+rank (\begin{DoxyParamCaption}\item[{int}]{intra\+\_\+rank\+\_\+out }\end{DoxyParamCaption})}
+
+
+
+Get the rank of this process within the M\+PI intra-\/communicator for the current code. 
+
+This function is only used by the Fortran wrapper \mbox{\Hypertarget{mdi_8c_ab6da1b33f517717441e44e37dd83c8fe}\label{mdi_8c_ab6da1b33f517717441e44e37dd83c8fe}} 
+\index{mdi.c@{mdi.c}!MDI\_Get\_language\_driver\_callback@{MDI\_Get\_language\_driver\_callback}}
+\index{MDI\_Get\_language\_driver\_callback@{MDI\_Get\_language\_driver\_callback}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Get\_language\_driver\_callback()}{MDI\_Get\_language\_driver\_callback()}}
+{\footnotesize\ttfamily M\+D\+I\+\_\+\+Driver\+\_\+node\+\_\+callback\+\_\+t M\+D\+I\+\_\+\+Get\+\_\+language\+\_\+driver\+\_\+callback (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the language driver callback needed by a language wrapper. 
+
+The function returns a function pointer to the driver callback function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em callback} & Driver callback \\
+\hline
+\mbox{\texttt{ in}}  & {\em comm} & M\+DI communicator \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a5db83532c511b9b4b00b1e711adaa477}\label{mdi_8c_a5db83532c511b9b4b00b1e711adaa477}} 
+\index{mdi.c@{mdi.c}!MDI\_Get\_method@{MDI\_Get\_method}}
+\index{MDI\_Get\_method@{MDI\_Get\_method}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Get\_method()}{MDI\_Get\_method()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+method (\begin{DoxyParamCaption}\item[{int $\ast$}]{method,  }\item[{M\+D\+I\+\_\+\+Comm}]{comm }\end{DoxyParamCaption})}
+
+
+
+Get the communication method of a communicator. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em method} & Role of the code (either {\ttfamily M\+D\+I\+\_\+\+T\+CP}, {\ttfamily M\+D\+I\+\_\+\+M\+PI}, {\ttfamily M\+D\+I\+\_\+\+T\+E\+ST}, or {\ttfamily M\+D\+I\+\_\+\+P\+L\+U\+G\+IN}) \\
+\hline
+\mbox{\texttt{ in}}  & {\em comm} & M\+DI communicator for which the library will return the communication method. \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{mdi_8c_a465fefea91d94e1e207c9f87a5af0339}\label{mdi_8c_a465fefea91d94e1e207c9f87a5af0339}} 
 \index{mdi.c@{mdi.c}!MDI\_Get\_NCallbacks@{MDI\_Get\_NCallbacks}}
 \index{MDI\_Get\_NCallbacks@{MDI\_Get\_NCallbacks}!mdi.c@{mdi.c}}
@@ -795,21 +933,11 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ out}}  & {\em name} & On return, the name of the node \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{mdi_8c_aba6884e311ea54778297805267a91e16}\label{mdi_8c_aba6884e311ea54778297805267a91e16}} 
-\index{mdi.c@{mdi.c}!MDI\_Get\_plugin\_mode@{MDI\_Get\_plugin\_mode}}
-\index{MDI\_Get\_plugin\_mode@{MDI\_Get\_plugin\_mode}!mdi.c@{mdi.c}}
-\doxysubsubsection{\texorpdfstring{MDI\_Get\_plugin\_mode()}{MDI\_Get\_plugin\_mode()}}
-{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+plugin\+\_\+mode (\begin{DoxyParamCaption}\item[{int $\ast$}]{plugin\+\_\+mode\+\_\+ptr }\end{DoxyParamCaption})}
-
-
-
-Get whether plugin mode is active. 
-
-\mbox{\Hypertarget{mdi_8c_a57509800ae93333f382d0cdec96179f3}\label{mdi_8c_a57509800ae93333f382d0cdec96179f3}} 
+\mbox{\Hypertarget{mdi_8c_a3bfe05f7b7e6c30738abe442de623128}\label{mdi_8c_a3bfe05f7b7e6c30738abe442de623128}} 
 \index{mdi.c@{mdi.c}!MDI\_Get\_python\_plugin\_mpi\_world\_ptr@{MDI\_Get\_python\_plugin\_mpi\_world\_ptr}}
 \index{MDI\_Get\_python\_plugin\_mpi\_world\_ptr@{MDI\_Get\_python\_plugin\_mpi\_world\_ptr}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Get\_python\_plugin\_mpi\_world\_ptr()}{MDI\_Get\_python\_plugin\_mpi\_world\_ptr()}}
-{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr (\begin{DoxyParamCaption}\item[{void $\ast$$\ast$}]{python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr\+\_\+ptr }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Get\+\_\+python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr (\begin{DoxyParamCaption}\item[{void $\ast$$\ast$}]{python\+\_\+plugin\+\_\+mpi\+\_\+world\+\_\+ptr\+\_\+ptr,  }\item[{void $\ast$}]{state\+\_\+in }\end{DoxyParamCaption})}
 
 
 
@@ -854,6 +982,35 @@ The function returns {\ttfamily 0} on a success.
 \index{MDI\_Init@{MDI\_Init}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Init()}{MDI\_Init()}}
 {\footnotesize\ttfamily int M\+D\+I\+\_\+\+Init (\begin{DoxyParamCaption}\item[{int $\ast$}]{argc,  }\item[{char $\ast$$\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Initialize communication through the M\+DI library. 
+
+If using the \char`\"{}-\/method M\+P\+I\char`\"{} option, this function must be called by all ranks. The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em argc} & Pointer to the number of arguments. \\
+\hline
+\mbox{\texttt{ in,out}}  & {\em argv} & Pointer to the argument vector. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_ac3f53714251da5894df2f52a4100b990}\label{mdi_8c_ac3f53714251da5894df2f52a4100b990}} 
+\index{mdi.c@{mdi.c}!MDI\_Init\_code@{MDI\_Init\_code}}
+\index{MDI\_Init\_code@{MDI\_Init\_code}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Init\_code()}{MDI\_Init\_code()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Init\+\_\+code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize a code structure for the M\+DI library. 
+
+The function returns {\ttfamily 0} on a success. \mbox{\Hypertarget{mdi_8c_a3af6852f1a469d0a6bd8113a3ff0260d}\label{mdi_8c_a3af6852f1a469d0a6bd8113a3ff0260d}} 
+\index{mdi.c@{mdi.c}!MDI\_Init\_with\_argv@{MDI\_Init\_with\_argv}}
+\index{MDI\_Init\_with\_argv@{MDI\_Init\_with\_argv}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Init\_with\_argv()}{MDI\_Init\_with\_argv()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Init\+\_\+with\+\_\+argv (\begin{DoxyParamCaption}\item[{int $\ast$}]{argc,  }\item[{char $\ast$$\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
 
 
 
@@ -961,6 +1118,69 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ out}}  & {\em world\+\_\+comm} & The M\+PI communicator that spans the single code corresponding to the calling rank. \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a7539c31ccab77c6d55cb0c8e23f5fdf5}\label{mdi_8c_a7539c31ccab77c6d55cb0c8e23f5fdf5}} 
+\index{mdi.c@{mdi.c}!MDI\_Open\_plugin@{MDI\_Open\_plugin}}
+\index{MDI\_Open\_plugin@{MDI\_Open\_plugin}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Open\_plugin()}{MDI\_Open\_plugin()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Open\+\_\+plugin (\begin{DoxyParamCaption}\item[{const char $\ast$}]{plugin\+\_\+name,  }\item[{const char $\ast$}]{options,  }\item[{void $\ast$}]{mpi\+\_\+comm\+\_\+ptr,  }\item[{M\+D\+I\+\_\+\+Comm $\ast$}]{mdi\+\_\+comm\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Open an M\+DI plugin instance in the background. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em plugin\+\_\+name} & Name of the plugin. \\
+\hline
+\mbox{\texttt{ in}}  & {\em options} & Command-\/line options for the plugin. \\
+\hline
+\mbox{\texttt{ in}}  & {\em mpi\+\_\+comm\+\_\+ptr} & Pointer to an M\+PI intra-\/communicator that spans all ranks that will run this plugin instance. \\
+\hline
+\mbox{\texttt{ out}}  & {\em mdi\+\_\+comm\+\_\+ptr} & Pointer to an M\+DI communicator for communication with the launched plugin. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_ac69f5e1cea7115d324cadd207c216081}\label{mdi_8c_ac69f5e1cea7115d324cadd207c216081}} 
+\index{mdi.c@{mdi.c}!MDI\_Plugin\_get\_arg@{MDI\_Plugin\_get\_arg}}
+\index{MDI\_Plugin\_get\_arg@{MDI\_Plugin\_get\_arg}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Plugin\_get\_arg()}{MDI\_Plugin\_get\_arg()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+arg (\begin{DoxyParamCaption}\item[{int}]{index,  }\item[{char $\ast$$\ast$}]{arg\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Get a specific element from plugin\+\_\+argv. 
+
+\mbox{\Hypertarget{mdi_8c_ab4e86ef9c4bb12e90d8e07be2e5cf6d9}\label{mdi_8c_ab4e86ef9c4bb12e90d8e07be2e5cf6d9}} 
+\index{mdi.c@{mdi.c}!MDI\_Plugin\_get\_argc@{MDI\_Plugin\_get\_argc}}
+\index{MDI\_Plugin\_get\_argc@{MDI\_Plugin\_get\_argc}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Plugin\_get\_argc()}{MDI\_Plugin\_get\_argc()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+argc (\begin{DoxyParamCaption}\item[{int $\ast$}]{argc\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Get plugin\+\_\+argc. 
+
+\mbox{\Hypertarget{mdi_8c_a4b7c5d301e092db15578ae745ffa0913}\label{mdi_8c_a4b7c5d301e092db15578ae745ffa0913}} 
+\index{mdi.c@{mdi.c}!MDI\_Plugin\_get\_args@{MDI\_Plugin\_get\_args}}
+\index{MDI\_Plugin\_get\_args@{MDI\_Plugin\_get\_args}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Plugin\_get\_args()}{MDI\_Plugin\_get\_args()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+args (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$}]{args\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Get plugin\+\_\+unedited\+\_\+options. 
+
+\mbox{\Hypertarget{mdi_8c_abebb0265894fbfcced765d9688719355}\label{mdi_8c_abebb0265894fbfcced765d9688719355}} 
+\index{mdi.c@{mdi.c}!MDI\_Plugin\_get\_argv@{MDI\_Plugin\_get\_argv}}
+\index{MDI\_Plugin\_get\_argv@{MDI\_Plugin\_get\_argv}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Plugin\_get\_argv()}{MDI\_Plugin\_get\_argv()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Plugin\+\_\+get\+\_\+argv (\begin{DoxyParamCaption}\item[{char $\ast$$\ast$$\ast$}]{argv\+\_\+ptr }\end{DoxyParamCaption})}
+
+
+
+Get plugin\+\_\+argv. 
+
 \mbox{\Hypertarget{mdi_8c_ab73f32323a155011fcc184866215ba03}\label{mdi_8c_ab73f32323a155011fcc184866215ba03}} 
 \index{mdi.c@{mdi.c}!MDI\_Recv@{MDI\_Recv}}
 \index{MDI\_Recv@{MDI\_Recv}!mdi.c@{mdi.c}}
@@ -1227,6 +1447,74 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ in}}  & {\em execute\+\_\+command} & Function pointer to the generic execute\+\_\+command function \\
 \hline
 \end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_acbd5b1e7f5535b1bfdd1b1a39e091805}\label{mdi_8c_acbd5b1e7f5535b1bfdd1b1a39e091805}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_language\_driver\_callback@{MDI\_Set\_language\_driver\_callback}}
+\index{MDI\_Set\_language\_driver\_callback@{MDI\_Set\_language\_driver\_callback}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_language\_driver\_callback()}{MDI\_Set\_language\_driver\_callback()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+language\+\_\+driver\+\_\+callback (\begin{DoxyParamCaption}\item[{M\+D\+I\+\_\+\+Driver\+\_\+node\+\_\+callback\+\_\+t}]{callback }\end{DoxyParamCaption})}
+
+
+
+Set the language-\/specific driver\+\_\+callback function needed by a language wrapper. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em callback} & Driver callback \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a17be79ed7246c8b78975987fe4b275fe}\label{mdi_8c_a17be79ed7246c8b78975987fe4b275fe}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_language\_execute\_command@{MDI\_Set\_language\_execute\_command}}
+\index{MDI\_Set\_language\_execute\_command@{MDI\_Set\_language\_execute\_command}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_language\_execute\_command()}{MDI\_Set\_language\_execute\_command()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+language\+\_\+execute\+\_\+command (\begin{DoxyParamCaption}\item[{int($\ast$)(void $\ast$, M\+D\+I\+\_\+\+Comm, void $\ast$)}]{execute\+\_\+command }\end{DoxyParamCaption})}
+
+
+
+Set the language execute\+\_\+command function needed by a language wrapper. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em execute\+\_\+command} & Execute command callback \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_af1f1e65f7942e4c85bc8353b93c10efc}\label{mdi_8c_af1f1e65f7942e4c85bc8353b93c10efc}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_Launch\_Plugin\_Callback@{MDI\_Set\_Launch\_Plugin\_Callback}}
+\index{MDI\_Set\_Launch\_Plugin\_Callback@{MDI\_Set\_Launch\_Plugin\_Callback}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_Launch\_Plugin\_Callback()}{MDI\_Set\_Launch\_Plugin\_Callback()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+\+Launch\+\_\+\+Plugin\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{int($\ast$)(void $\ast$, void $\ast$, void $\ast$, int)}]{launch\+\_\+plugin }\end{DoxyParamCaption})}
+
+
+
+Set the callback M\+DI uses for M\+D\+I\+\_\+\+Plugin\+\_\+init when the driver is in Python. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em launch\+\_\+plugin} & Function pointer to the launch\+\_\+plugin callback \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a9db0aed6228db1309a14926b7009f064}\label{mdi_8c_a9db0aed6228db1309a14926b7009f064}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_Mpi4py\_Allgather\_Callback@{MDI\_Set\_Mpi4py\_Allgather\_Callback}}
+\index{MDI\_Set\_Mpi4py\_Allgather\_Callback@{MDI\_Set\_Mpi4py\_Allgather\_Callback}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_Mpi4py\_Allgather\_Callback()}{MDI\_Set\_Mpi4py\_Allgather\_Callback()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Allgather\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{int($\ast$)(void $\ast$, void $\ast$)}]{mpi4py\+\_\+allgather }\end{DoxyParamCaption})}
+
+
+
+Set the callback M\+DI uses for gathering M\+DI versions when using mpi4py. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em mpi4py\+\_\+allgather} & Function pointer to the mpi4py\+\_\+allgather callback \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{mdi_8c_aaf70b8b181eca7c16d282e548b029ad6}\label{mdi_8c_aaf70b8b181eca7c16d282e548b029ad6}} 
 \index{mdi.c@{mdi.c}!MDI\_Set\_Mpi4py\_Barrier\_Callback@{MDI\_Set\_Mpi4py\_Barrier\_Callback}}
 \index{MDI\_Set\_Mpi4py\_Barrier\_Callback@{MDI\_Set\_Mpi4py\_Barrier\_Callback}!mdi.c@{mdi.c}}
@@ -1244,11 +1532,11 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ in}}  & {\em mpi4py\+\_\+barrier} & Function pointer to the mpi4py\+\_\+barrier callback \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{mdi_8c_ac6f51e08d052f94e2ffb53ff02e0a5e1}\label{mdi_8c_ac6f51e08d052f94e2ffb53ff02e0a5e1}} 
+\mbox{\Hypertarget{mdi_8c_a5cf6a719d2fbfb403b16ec7b282a2f4b}\label{mdi_8c_a5cf6a719d2fbfb403b16ec7b282a2f4b}} 
 \index{mdi.c@{mdi.c}!MDI\_Set\_Mpi4py\_Gather\_Names\_Callback@{MDI\_Set\_Mpi4py\_Gather\_Names\_Callback}}
 \index{MDI\_Set\_Mpi4py\_Gather\_Names\_Callback@{MDI\_Set\_Mpi4py\_Gather\_Names\_Callback}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Set\_Mpi4py\_Gather\_Names\_Callback()}{MDI\_Set\_Mpi4py\_Gather\_Names\_Callback()}}
-{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Gather\+\_\+\+Names\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{int($\ast$)(void $\ast$, void $\ast$)}]{mpi4py\+\_\+gather\+\_\+names }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+\+Mpi4py\+\_\+\+Gather\+\_\+\+Names\+\_\+\+Callback (\begin{DoxyParamCaption}\item[{int($\ast$)(void $\ast$, void $\ast$, int $\ast$, int $\ast$)}]{mpi4py\+\_\+gather\+\_\+names }\end{DoxyParamCaption})}
 
 
 
@@ -1346,7 +1634,44 @@ The function returns {\ttfamily 0} on a success.
 \mbox{\texttt{ in}}  & {\em mpi4py\+\_\+split} & Function pointer to the mpi4py\+\_\+split callback \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{mdi_8c_a4b95094e7410c4d58739245172019100}\label{mdi_8c_a4b95094e7410c4d58739245172019100}} 
+\mbox{\Hypertarget{mdi_8c_a5d1fb9bd79c1c84057455fd5dc974f19}\label{mdi_8c_a5d1fb9bd79c1c84057455fd5dc974f19}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_on\_destroy\_code@{MDI\_Set\_on\_destroy\_code}}
+\index{MDI\_Set\_on\_destroy\_code@{MDI\_Set\_on\_destroy\_code}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_on\_destroy\_code()}{MDI\_Set\_on\_destroy\_code()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+on\+\_\+destroy\+\_\+code (\begin{DoxyParamCaption}\item[{int($\ast$)(int)}]{func }\end{DoxyParamCaption})}
+
+
+
+Set the language-\/based callback for when a code is destroyed. 
+
+This is currently only used by Fortran plugins \mbox{\Hypertarget{mdi_8c_a9ecbc257bc3d76f8d108f6b720fd579a}\label{mdi_8c_a9ecbc257bc3d76f8d108f6b720fd579a}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_plugin\_language@{MDI\_Set\_plugin\_language}}
+\index{MDI\_Set\_plugin\_language@{MDI\_Set\_plugin\_language}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_plugin\_language()}{MDI\_Set\_plugin\_language()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+plugin\+\_\+language (\begin{DoxyParamCaption}\item[{int}]{language,  }\item[{void $\ast$}]{plugin\+\_\+state }\end{DoxyParamCaption})}
+
+
+
+Set the language of an M\+DI plugin. 
+
+The function returns {\ttfamily 0} on a success.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em language} & Language of the plugin \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{mdi_8c_a68ecdd9f61501109910f493a1ed4b6dd}\label{mdi_8c_a68ecdd9f61501109910f493a1ed4b6dd}} 
+\index{mdi.c@{mdi.c}!MDI\_Set\_plugin\_state\_internal@{MDI\_Set\_plugin\_state\_internal}}
+\index{MDI\_Set\_plugin\_state\_internal@{MDI\_Set\_plugin\_state\_internal}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Set\_plugin\_state\_internal()}{MDI\_Set\_plugin\_state\_internal()}}
+{\footnotesize\ttfamily int M\+D\+I\+\_\+\+Set\+\_\+plugin\+\_\+state\+\_\+internal (\begin{DoxyParamCaption}\item[{void $\ast$}]{state }\end{DoxyParamCaption})}
+
+
+
+Set the language-\/based callback for when a code is destroyed. 
+
+This is only intended to be used internally by the M\+DI Library \mbox{\Hypertarget{mdi_8c_a4b95094e7410c4d58739245172019100}\label{mdi_8c_a4b95094e7410c4d58739245172019100}} 
 \index{mdi.c@{mdi.c}!MDI\_Set\_World\_Rank@{MDI\_Set\_World\_Rank}}
 \index{MDI\_Set\_World\_Rank@{MDI\_Set\_World\_Rank}!mdi.c@{mdi.c}}
 \doxysubsubsection{\texorpdfstring{MDI\_Set\_World\_Rank()}{MDI\_Set\_World\_Rank()}}
@@ -1367,3 +1692,24 @@ This function is only used if the linked program uses M\+P\+I4\+PY. \mbox{\Hyper
 Set the size of M\+P\+I\+\_\+\+C\+O\+M\+M\+\_\+\+W\+O\+R\+LD. 
 
 This function is only used if the linked program uses M\+P\+I4\+PY. 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{mdi_8c_a5e4ead94fc691b76201e41e0c4404d96}\label{mdi_8c_a5e4ead94fc691b76201e41e0c4404d96}} 
+\index{mdi.c@{mdi.c}!MDI\_Get\_language\_execute\_command@{MDI\_Get\_language\_execute\_command}}
+\index{MDI\_Get\_language\_execute\_command@{MDI\_Get\_language\_execute\_command}!mdi.c@{mdi.c}}
+\doxysubsubsection{\texorpdfstring{MDI\_Get\_language\_execute\_command}{MDI\_Get\_language\_execute\_command}}
+{\footnotesize\ttfamily int($\ast$)(void$\ast$, M\+D\+I\+\_\+\+Comm, void$\ast$) M\+D\+I\+\_\+\+Get\+\_\+language\+\_\+execute\+\_\+command(M\+D\+I\+\_\+\+Comm comm)}
+
+
+
+Get the language execute\+\_\+command function needed by a language wrapper. 
+
+The function returns a function pointer to the execute\+\_\+command function.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em execute\+\_\+command} & Execute command callback \\
+\hline
+\mbox{\texttt{ in}}  & {\em comm} & M\+DI communicator \\
+\hline
+\end{DoxyParams}

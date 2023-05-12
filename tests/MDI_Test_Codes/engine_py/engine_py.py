@@ -35,6 +35,8 @@ def execute_command(command, comm, self):
         mdi.MDI_Send(self.natoms, 1, mdi.MDI_INT, comm)
     elif command == "<COORDS":
         mdi.MDI_Send(self.coords, 3 * self.natoms, mdi.MDI_DOUBLE, comm)
+    elif command == ">COORDS":
+        self.coords = mdi.MDI_Recv(3 * self.natoms, mdi.MDI_DOUBLE, comm)
     elif command == "<FORCES_B":
         # Create NumPy byte array
         double_size = np.dtype(np.float64).itemsize
@@ -66,13 +68,11 @@ class MDIEngine:
         else:
             self.forces = forces
 
-    def run(self, mdi_options):
         # get the MPI communicator
         if use_mpi4py:
             self.mpi_world = MPI.COMM_WORLD
 
         # Initialize the MDI Library
-        mdi.MDI_Init(mdi_options)
         if use_mpi4py:
             self.mpi_world = mdi.MDI_MPI_get_world_comm()
             self.world_rank = self.mpi_world.Get_rank()
@@ -87,6 +87,7 @@ class MDIEngine:
         mdi.MDI_Register_Command("@DEFAULT","EXIT")
         mdi.MDI_Register_Command("@DEFAULT","<NATOMS")
         mdi.MDI_Register_Command("@DEFAULT","<COORDS")
+        mdi.MDI_Register_Command("@DEFAULT",">COORDS")
         mdi.MDI_Register_Command("@DEFAULT","<FORCES")
         mdi.MDI_Register_Command("@DEFAULT","<FORCES_B")
         mdi.MDI_Register_Node("@FORCES")
@@ -99,19 +100,32 @@ class MDIEngine:
         mdi.MDI_Set_Execute_Command_Func(execute_command, self)
 
         # Connect to the driver
-        comm = mdi.MDI_Accept_Communicator()
+        self.comm = mdi.MDI_Accept_Communicator()
+
+    def run(self):
 
         while not self.exit_flag:
-            command = mdi.MDI_Recv_Command(comm)
+
+            command = mdi.MDI_Recv_Command(self.comm)
             if use_mpi4py:
                 command = self.mpi_world.bcast(command, root=0)
 
-            execute_command( command, comm, self )
+            execute_command( command, self.comm, self )
 
-def MDI_Plugin_init_engine_py():
+def MDI_Plugin_init_engine_py(plugin_state):
+
+    mdi.MDI_Set_plugin_state(plugin_state)
+
     engine = MDIEngine()
-    engine.run("-role ENGINE -method LINK -name MM")
+    engine.run()
+
+def MDI_Plugin_open_engine_py(plugin_state):
+
+    mdi.MDI_Set_plugin_state(plugin_state)
+
+    engine = MDIEngine()
 
 if __name__== "__main__":
+    mdi.MDI_Init(sys.argv[2])
     engine = MDIEngine()
-    engine.run(sys.argv[2])
+    engine.run()
