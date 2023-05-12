@@ -8,6 +8,7 @@ The M\+DI Standard defines several nodes. Their names and when they occur are as
 
 \begin{DoxyParagraph}{}
 {\bfseries{ @\+D\+E\+F\+A\+U\+LT }} -\/ Upon initially connecting to the driver. ~\newline
+ {\bfseries{ @\+I\+N\+I\+T\+\_\+\+MC }} -\/ Upon initializing a new Monte Carlo simulation. ~\newline
  {\bfseries{ @\+I\+N\+I\+T\+\_\+\+MD }} -\/ Upon initializing a new molecular dynamics simulation. ~\newline
  {\bfseries{ @\+I\+N\+I\+T\+\_\+\+O\+P\+TG }} -\/ Upon initializing a new geometry optimization. ~\newline
 
@@ -48,7 +49,7 @@ The following constants are defined by the M\+DI Standard and are accessible thr
 \begin{DoxyItemize}
 \item {\ttfamily M\+D\+I\+\_\+\+M\+PI} -\/ Identifier for the M\+PI communication method
 \item {\ttfamily M\+D\+I\+\_\+\+T\+CP} -\/ Identifier for the T\+CP communication method
-\item {\ttfamily M\+D\+I\+\_\+\+L\+IB} -\/ Identifier for the L\+IB communication method
+\item {\ttfamily M\+D\+I\+\_\+\+L\+I\+NK} -\/ Identifier for the L\+I\+NK communication method
 \item {\ttfamily M\+D\+I\+\_\+\+T\+E\+ST} -\/ Identifier for the T\+E\+ST communication method
 \item {\ttfamily M\+D\+I\+\_\+\+D\+R\+I\+V\+ER} -\/ Identifier for the D\+R\+I\+V\+ER role
 \item {\ttfamily M\+D\+I\+\_\+\+E\+N\+G\+I\+NE} -\/ Identifier for the E\+N\+G\+I\+NE role
@@ -136,7 +137,7 @@ This command is primarily intended for use with gas-\/phase quantum mechanics co
 \begin{DoxyParagraph}{}
 {\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
  {\bfseries{ Quantity\+: }} {\ttfamily  3 $\ast$ N\+L\+A\+T\+T\+I\+CE } ~\newline
- {\bfseries{ Format\+: }} Sequentially ascending order of point charge index, with the coordinates for each individual point charge being provided in xyz order
+ {\bfseries{ Format\+: }} Sequentially ascending order of lattice charge index, with the coordinates for each individual lattice charge being provided in xyz order
 \end{DoxyParagraph}
 \hypertarget{mdi_standard_coords_node}{}\doxysubsection{@\+C\+O\+O\+R\+DS}\label{mdi_standard_coords_node}
 The engine proceeds to the next {\ttfamily @\+C\+O\+O\+R\+DS}  node (see \mbox{\hyperlink{mdi_standard_standard_nodes_sec}{Nodes}}). This command is not valid at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node.\hypertarget{mdi_standard_send_coords}{}\doxysubsection{$>$\+C\+O\+O\+R\+DS}\label{mdi_standard_send_coords}
@@ -203,7 +204,15 @@ The engine sends the electronic multiplicity of its system to the driver. This c
  {\bfseries{ Quantity\+: }} 1
 \end{DoxyParagraph}
 \hypertarget{mdi_standard_recv_elements}{}\doxysubsection{$<$\+E\+L\+E\+M\+E\+N\+TS}\label{mdi_standard_recv_elements}
-The engine sends the atomic number of each element in its system to the driver.
+The engine sends the atomic number of each atom in its system to the driver.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+I\+NT} ~\newline
+ {\bfseries{ Quantity\+: }} {\ttfamily N\+A\+T\+O\+MS} ~\newline
+ {\bfseries{ Format\+: }} Sequentially ascending order of atomic index
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_send_elements}{}\doxysubsection{$>$\+E\+L\+E\+M\+E\+N\+TS}\label{mdi_standard_send_elements}
+The driver sends a set of atomic numbers to the engine, which replaces the atomic number of each atom in its system with the values sent by the driver.
 
 \begin{DoxyParagraph}{}
 {\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+I\+NT} ~\newline
@@ -249,7 +258,8 @@ If the engine is not at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node, it sends its
  {\bfseries{ Quantity\+: }} {\ttfamily  3 $\ast$ N\+A\+T\+O\+MS } ~\newline
  {\bfseries{ Format\+: }} Sequentially ascending order of atomic index, with the forces for each individual atom being provided in xyz order
 \end{DoxyParagraph}
-\hypertarget{mdi_standard_init_md}{}\doxysubsection{@\+I\+N\+I\+T\+\_\+\+MD}\label{mdi_standard_init_md}
+\hypertarget{mdi_standard_init_mc}{}\doxysubsection{@\+I\+N\+I\+T\+\_\+\+MC}\label{mdi_standard_init_mc}
+The engine performs any initialization operations that are necessary before a Monte Carlo simulation can be performed, proceeding to the @\+I\+N\+I\+T\+\_\+\+MC node.\hypertarget{mdi_standard_init_md}{}\doxysubsection{@\+I\+N\+I\+T\+\_\+\+MD}\label{mdi_standard_init_md}
 The engine performs any initialization operations that are necessary before a molecular dynamics simulation can be performed, proceeding to the @\+I\+N\+I\+T\+\_\+\+MD node.
 
 \begin{DoxyParagraph}{}
@@ -288,7 +298,7 @@ If the engine is not at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node, it sends its
 {\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
  {\bfseries{ Quantity\+: }} 1
 \end{DoxyParagraph}
-\hypertarget{mdi_standard_send_stress}{}\doxysubsection{$<$\+L\+A\+B\+E\+LS}\label{mdi_standard_send_stress}
+\hypertarget{mdi_standard_send_labels}{}\doxysubsection{$<$\+L\+A\+B\+E\+LS}\label{mdi_standard_send_labels}
 The engine sends a label for each atom in its system. \char`\"{}\+Labels\char`\"{} are intended primarily for the purpose of providing a human-\/readable identifier for each of the atoms, and do not have a standardized physical meaning. It is recommended that the labels correspond to the element of each atom (i.\+e., \char`\"{}\+H\char`\"{}, \char`\"{}\+He\char`\"{}, \char`\"{}\+Li\char`\"{}, etc.), a name associated with atoms of a particular type (i.\+e., \char`\"{}\+Carboxyl\+\_\+\+Hydrogen\char`\"{}, \char`\"{}\+Methyl\+\_\+\+Hydrogen\char`\"{}), or a similarly descriptive term. The atom labels may correspond to a number identifier (i.\+e., \char`\"{}1\char`\"{}, \char`\"{}2\char`\"{}, \char`\"{}3\char`\"{}, etc.) in cases where more descriptive labels are not practical, but note that such labels must be represented using the {\ttfamily M\+D\+I\+\_\+\+C\+H\+AR} data type, as indicated below. It is required that atoms having different physical properties (i.\+e., different force field terms in a molecular mechanics simulation or different nuclear charges in a quantum chemistry simulation) have different labels.
 
 \begin{DoxyParagraph}{}
@@ -305,7 +315,19 @@ This command is primarily intended for use with gas-\/phase quantum mechanics co
 \begin{DoxyParagraph}{}
 {\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
  {\bfseries{ Quantity\+: }} {\ttfamily  N\+L\+A\+T\+T\+I\+CE } ~\newline
- {\bfseries{ Format\+: }} Sequentially ascending order of point charge index
+ {\bfseries{ Format\+: }} Sequentially ascending order of lattice charge index
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_recv_lattice_forces}{}\doxysubsection{$<$\+L\+A\+T\+T\+I\+C\+E\+\_\+\+F\+O\+R\+C\+ES}\label{mdi_standard_recv_lattice_forces}
+If the engine is at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node, it calculates and sends the forces on any lattice charges (which must have previously assigned with the {\ttfamily $>$L\+A\+T\+T\+I\+CE} command) to the driver. Prior to sending this command, the driver must have set the number, coordinates, and magnitudes of the lattice charges using the {\ttfamily $>$N\+L\+A\+T\+T\+I\+CE}, {\ttfamily $>$C\+L\+A\+T\+T\+I\+CE}, and {\ttfamily $>$L\+A\+T\+T\+I\+CE} commands. These forces must include only electrostatic interactions between the lattice charges and the atomic nuclei, and between the lattice charges and any electrons. They must not include electrostatic interactions between the lattice charges and other lattice charges. If the engine has previously calculated these forces, and no intervening commands from the driver could have changed the forces, the engine is permitted to send the previously calculated forces instead of recalculating them.
+
+If the engine is not at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node, it sends its most recently calculated lattice forces to the driver.
+
+This command is primarily intended for use with gas-\/phase quantum mechanics codes.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
+ {\bfseries{ Quantity\+: }} {\ttfamily  3 $\ast$ N\+L\+A\+T\+T\+I\+CE } ~\newline
+ {\bfseries{ Format\+: }} Sequentially ascending order of lattice charge index, with the forces for each individual lattice charge being provided in xyz order
 \end{DoxyParagraph}
 \hypertarget{mdi_standard_recv_masses}{}\doxysubsection{$<$\+M\+A\+S\+S\+ES}\label{mdi_standard_recv_masses}
 The engine sends the driver the mass of each of the atoms.
@@ -314,6 +336,22 @@ The engine sends the driver the mass of each of the atoms.
 {\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
  {\bfseries{ Quantity\+: }} {\ttfamily  $<$N\+A\+T\+O\+MS } ~\newline
  {\bfseries{ Format\+: }} Sequentially ascending order of atomic index
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_send_Monkhorst_Pack}{}\doxysubsection{$>$\+M\+O\+N\+K\+H\+O\+R\+S\+T-\/\+P\+A\+C\+K\+\_\+\+N\+P\+O\+I\+N\+TS}\label{mdi_standard_send_Monkhorst_Pack}
+This command is typically expected for use with plane wave D\+FT engines. The driver sends the engine the number of k-\/points to generate on a Monkhorst-\/\+Pack grid. The engine then uses the k-\/points generated on this Monkhorst-\/\+Pack grid for all further simulations.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+I\+NT} ~\newline
+ {\bfseries{ Quantity\+: }} {\ttfamily  3 } ~\newline
+ {\bfseries{ Format\+: }} The number of k-\/points to generate along each vector of the Brillouin zone, in ascending order of vector.
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_send_Monkhorst_Pack_shift}{}\doxysubsection{$>$\+M\+O\+N\+K\+H\+O\+R\+S\+T-\/\+P\+A\+C\+K\+\_\+\+S\+H\+I\+FT}\label{mdi_standard_send_Monkhorst_Pack_shift}
+This command is typically expected for use with plane wave D\+FT engines. The driver sends the engine a set of values that indicate the extent to which a set of k-\/points on a Monkhorst-\/\+Pack grid should be displaced relative to the original (non-\/displaced) Monkhorst-\/\+Pack grid. The engine then uses the shifted k-\/points for all further simulations.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+D\+O\+U\+B\+LE} ~\newline
+ {\bfseries{ Quantity\+: }} {\ttfamily  3 } ~\newline
+ {\bfseries{ Format\+: }} The fraction of a grid step by which the k-\/points should be displaced, in ascending order of vector. A value of 0.\+0 indicates no displacement along the corresponding vector, while a value of 0.\+5 indicates a displacement of half a grid step in along the corresponding vector. Note that some engines can only support values of 0.\+0 or 0.\+5.
 \end{DoxyParagraph}
 \hypertarget{mdi_standard_send_name}{}\doxysubsection{$<$\+N\+A\+ME}\label{mdi_standard_send_name}
 The engine sends the driver a string that corresponds to the argument of {\ttfamily -\/name} in the M\+DI initialization options. This argument allows a driver to identify the purpose of connected engine codes within the simulation. For example, a particular Q\+M/\+MM driver might require a connection with a single MM code and a single QM code, with the expected name of the MM code being \char`\"{}\+M\+M\char`\"{} and the expected name of the QM code being \char`\"{}\+Q\+M\char`\"{}. After initializing M\+DI and accepting communicators to the engines, the driver can use this command to identify which of the engines is the MM code and which is the QM code.
@@ -390,7 +428,23 @@ If the engine is not at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node, it sends its
  {\bfseries{ Quantity\+: }} 1
 \end{DoxyParagraph}
 \hypertarget{mdi_standard_pre-forces_node}{}\doxysubsection{@\+P\+R\+E-\/\+F\+O\+R\+C\+ES}\label{mdi_standard_pre-forces_node}
-The engine proceeds to the next {\ttfamily  @\+P\+RE-\/F\+O\+R\+C\+ES } node (see \mbox{\hyperlink{mdi_standard_standard_nodes_sec}{Nodes}}). This command is not valid at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node.\hypertarget{mdi_standard_send_stress}{}\doxysubsection{$<$\+L\+A\+B\+E\+LS}\label{mdi_standard_send_stress}
+The engine proceeds to the next {\ttfamily  @\+P\+RE-\/F\+O\+R\+C\+ES } node (see \mbox{\hyperlink{mdi_standard_standard_nodes_sec}{Nodes}}). This command is not valid at the {\ttfamily @\+D\+E\+F\+A\+U\+LT}  node.\hypertarget{mdi_standard_send_spin_polarization}{}\doxysubsection{$<$\+S\+P\+I\+N\+\_\+\+P\+O\+L\+A\+R\+I\+Z\+A\+T\+I\+ON}\label{mdi_standard_send_spin_polarization}
+The engine sends a value that indicates the manner in which it is currently simulating spin polarization. This command is typically intended for use with plane wave D\+FT engines.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+I\+NT} ~\newline
+ {\bfseries{ Quantity\+: }} 1 ~\newline
+ {\bfseries{ Format\+: }} A value of 0 indicates that simulations will be performed in a non-\/spin-\/polarized manner. A value of 1 indicates that simulations will be performed in a spin-\/polarized manner, within the local spin density approximation (L\+S\+DA). A value of 2 indicates that simulations will be performed in a spin-\/polarized, noncollinear manner.
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_recv_spin_polarization}{}\doxysubsection{$>$\+S\+P\+I\+N\+\_\+\+P\+O\+L\+A\+R\+I\+Z\+A\+T\+I\+ON}\label{mdi_standard_recv_spin_polarization}
+The driver sends a value that indicates the manner in which spin polarization should be simulated by the engine. This command is typically intended for use with plane wave D\+FT engines.
+
+\begin{DoxyParagraph}{}
+{\bfseries{ Data Type\+: }} {\ttfamily M\+D\+I\+\_\+\+I\+NT} ~\newline
+ {\bfseries{ Quantity\+: }} 1 ~\newline
+ {\bfseries{ Format\+: }} A value of 0 indicates that simulations should be performed in a non-\/spin-\/polarized manner. A value of 1 indicates that simulations should be performed in a spin-\/polarized manner, within the local spin density approximation (L\+S\+DA). A value of 2 indicates that simulations should be performed in a spin-\/polarized, noncollinear manner.
+\end{DoxyParagraph}
+\hypertarget{mdi_standard_send_stress}{}\doxysubsection{$<$\+S\+T\+R\+E\+SS}\label{mdi_standard_send_stress}
 The engine sends its virial stress tensor to the driver.
 
 \begin{DoxyParagraph}{}

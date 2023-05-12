@@ -39,6 +39,7 @@ Their names and when they occur are as follows:
 
 \par
 <b> @DEFAULT </b> - Upon initially connecting to the driver. <br>
+<b> @INIT_MC </b> - Upon initializing a new Monte Carlo simulation. <br>
 <b> @INIT_MD </b> - Upon initializing a new molecular dynamics simulation. <br>
 <b> @INIT_OPTG </b> - Upon initializing a new geometry optimization. <br>
 
@@ -82,7 +83,7 @@ The following constants are defined by the MDI Standard and are accessible throu
 
   - \c MDI_MPI - Identifier for the MPI communication method
   - \c MDI_TCP - Identifier for the TCP communication method
-  - \c MDI_LIB - Identifier for the LIB communication method
+  - \c MDI_LINK - Identifier for the LINK communication method
   - \c MDI_TEST - Identifier for the TEST communication method
   - \c MDI_DRIVER - Identifier for the DRIVER role
   - \c MDI_ENGINE - Identifier for the ENGINE role
@@ -212,7 +213,7 @@ For an alternative command that is more appropriate for plane wave quantum mecha
 \par
 <b> Data Type: </b> \c MDI_DOUBLE <br>
 <b> Quantity: </b> <c> 3 * NLATTICE </c> <br>
-<b> Format: </b> Sequentially ascending order of point charge index, with the coordinates for each individual point charge being provided in xyz order
+<b> Format: </b> Sequentially ascending order of lattice charge index, with the coordinates for each individual lattice charge being provided in xyz order
 
 
 
@@ -318,7 +319,18 @@ This command is typically only appropriate for quantum mechanics engines.
 
 \subsection recv_elements <ELEMENTS
 
-The engine sends the atomic number of each element in its system to the driver.
+The engine sends the atomic number of each atom in its system to the driver.
+
+\par
+<b> Data Type: </b> \c MDI_INT <br>
+<b> Quantity: </b> \c NATOMS <br>
+<b> Format: </b> Sequentially ascending order of atomic index
+
+
+
+\subsection send_elements >ELEMENTS
+
+The driver sends a set of atomic numbers to the engine, which replaces the atomic number of each atom in its system with the values sent by the driver.
 
 \par
 <b> Data Type: </b> \c MDI_INT <br>
@@ -392,6 +404,12 @@ See the descriptions of the different nodes for more details.
 
 
 
+\subsection init_mc @INIT_MC
+
+The engine performs any initialization operations that are necessary before a Monte Carlo simulation can be performed, proceeding to the @INIT_MC node.
+
+
+
 \subsection init_md @INIT_MD
 
 The engine performs any initialization operations that are necessary before a molecular dynamics simulation can be performed, proceeding to the @INIT_MD node.
@@ -449,7 +467,7 @@ If the engine is not at the \c @DEFAULT node, it sends its most recently calcula
 
 
 
-\subsection send_stress <LABELS
+\subsection send_labels <LABELS
 
 The engine sends a label for each atom in its system.
 "Labels" are intended primarily for the purpose of providing a human-readable identifier for each of the atoms, and do not have a standardized physical meaning.
@@ -476,7 +494,26 @@ For an alternative command that is more appropriate for plane wave quantum mecha
 \par
 <b> Data Type: </b> \c MDI_DOUBLE <br>
 <b> Quantity: </b> <c> NLATTICE </c> <br>
-<b> Format: </b> Sequentially ascending order of point charge index
+<b> Format: </b> Sequentially ascending order of lattice charge index
+
+
+
+\subsection recv_lattice_forces <LATTICE_FORCES
+
+If the engine is at the \c @DEFAULT node, it calculates and sends the forces on any lattice charges (which must have previously assigned with the \c >LATTICE command) to the driver.
+Prior to sending this command, the driver must have set the number, coordinates, and magnitudes of the lattice charges using the \c >NLATTICE, \c >CLATTICE, and \c >LATTICE commands.
+These forces must include only electrostatic interactions between the lattice charges and the atomic nuclei, and between the lattice charges and any electrons.
+They must not include electrostatic interactions between the lattice charges and other lattice charges.
+If the engine has previously calculated these forces, and no intervening commands from the driver could have changed the forces, the engine is permitted to send the previously calculated forces instead of recalculating them.
+
+If the engine is not at the \c @DEFAULT node, it sends its most recently calculated lattice forces to the driver.
+
+This command is primarily intended for use with gas-phase quantum mechanics codes.
+
+\par
+<b> Data Type: </b> \c MDI_DOUBLE <br>
+<b> Quantity: </b> <c> 3 * NLATTICE </c> <br>
+<b> Format: </b> Sequentially ascending order of lattice charge index, with the forces for each individual lattice charge being provided in xyz order
 
 
 
@@ -488,6 +525,35 @@ The engine sends the driver the mass of each of the atoms.
 <b> Data Type: </b> \c MDI_DOUBLE <br>
 <b> Quantity: </b> <c> <NATOMS </c> <br>
 <b> Format: </b> Sequentially ascending order of atomic index
+
+
+
+
+\subsection send_Monkhorst_Pack >MONKHORST-PACK_NPOINTS
+
+This command is typically expected for use with plane wave DFT engines.
+The driver sends the engine the number of k-points to generate on a Monkhorst-Pack grid.
+The engine then uses the k-points generated on this Monkhorst-Pack grid for all further simulations.
+
+\par
+<b> Data Type: </b> \c MDI_INT <br>
+<b> Quantity: </b> <c> 3 </c> <br>
+<b> Format: </b> The number of k-points to generate along each vector of the Brillouin zone, in ascending order of vector.
+
+
+
+
+\subsection send_Monkhorst_Pack_shift >MONKHORST-PACK_SHIFT
+
+This command is typically expected for use with plane wave DFT engines.
+The driver sends the engine a set of values that indicate the extent to which a set of k-points on a Monkhorst-Pack grid should be displaced relative to the original (non-displaced) Monkhorst-Pack grid.
+The engine then uses the shifted k-points for all further simulations.
+
+\par
+<b> Data Type: </b> \c MDI_DOUBLE <br>
+<b> Quantity: </b> <c> 3 </c> <br>
+<b> Format: </b> The fraction of a grid step by which the k-points should be displaced, in ascending order of vector.  A value of 0.0 indicates no displacement along the corresponding vector, while a value of 0.5 indicates a displacement of half a grid step in along the corresponding vector.  Note that some engines can only support values of 0.0 or 0.5.
+
 
 
 
@@ -614,6 +680,30 @@ If the engine is not at the \c @DEFAULT node, it sends its most recently calcula
 
 The engine proceeds to the next <c> @PRE-FORCES </c> node (see \ref standard_nodes_sec).
 This command is not valid at the \c @DEFAULT node.
+
+
+
+\subsection send_spin_polarization <SPIN_POLARIZATION
+
+The engine sends a value that indicates the manner in which it is currently simulating spin polarization.
+This command is typically intended for use with plane wave DFT engines.
+
+\par
+<b> Data Type: </b> \c MDI_INT <br>
+<b> Quantity: </b> 1 <br>
+<b> Format: </b> A value of 0 indicates that simulations will be performed in a non-spin-polarized manner.  A value of 1 indicates that simulations will be performed in a spin-polarized manner, within the local spin density approximation (LSDA).  A value of 2 indicates that simulations will be performed in a spin-polarized, noncollinear manner.
+
+
+
+\subsection recv_spin_polarization >SPIN_POLARIZATION
+
+The driver sends a value that indicates the manner in which spin polarization should be simulated by the engine.
+This command is typically intended for use with plane wave DFT engines.
+
+\par
+<b> Data Type: </b> \c MDI_INT <br>
+<b> Quantity: </b> 1 <br>
+<b> Format: </b> A value of 0 indicates that simulations should be performed in a non-spin-polarized manner.  A value of 1 indicates that simulations should be performed in a spin-polarized manner, within the local spin density approximation (LSDA).  A value of 2 indicates that simulations should be performed in a spin-polarized, noncollinear manner.
 
 
 

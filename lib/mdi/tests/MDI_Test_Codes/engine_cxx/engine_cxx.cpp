@@ -21,6 +21,7 @@ int initialize_mdi(MDI_Comm* comm_ptr) {
   MDI_Register_command("@DEFAULT","EXIT");
   MDI_Register_command("@DEFAULT","<NATOMS");
   MDI_Register_command("@DEFAULT","<COORDS");
+  MDI_Register_command("@DEFAULT",">COORDS");
   MDI_Register_command("@DEFAULT","<FORCES");
   MDI_Register_command("@DEFAULT","<FORCES_B");
   MDI_Register_node("@FORCES");
@@ -79,6 +80,9 @@ int execute_command(const char* command, MDI_Comm comm, void* class_obj) {
   else if ( strcmp(command, "<COORDS") == 0 ) {
     MDI_Send(&coords, 3 * natoms, MDI_DOUBLE, comm);
   }
+  else if ( strcmp(command, ">COORDS") == 0 ) {
+    MDI_Recv(&coords, 3 * natoms, MDI_DOUBLE, comm);
+  }
   else if ( strcmp(command, "<FORCES") == 0 ) {
     MDI_Send(&forces, 3 * natoms, MDI_DOUBLE, comm);
   }
@@ -93,19 +97,8 @@ int execute_command(const char* command, MDI_Comm comm, void* class_obj) {
 }
 
 
-int MDI_Plugin_init_engine_cxx() {
-  // Get the command-line arguments for this plugin instance
-  int mdi_argc;
-  if ( MDI_Plugin_get_argc(&mdi_argc) ) {
-    throw std::runtime_error("MDI_Plugin_get_argc failed.");
-  }
-  char** mdi_argv;
-  if ( MDI_Plugin_get_argv(&mdi_argv) ) {
-    throw std::runtime_error("MDI_Plugin_get_argv failed.");
-  }
-
-  // Call MDI_Init
-  MDI_Init(&mdi_argc, &mdi_argv);
+int MDI_Plugin_init_engine_cxx(void* plugin_state) {
+  MDI_Set_plugin_state(plugin_state);
 
   // Get the MPI intra-communicator for this code
   MPI_Comm mpi_world_comm = MPI_COMM_WORLD;
@@ -122,6 +115,33 @@ int MDI_Plugin_init_engine_cxx() {
   // Respond to commands from the driver
   respond_to_commands(comm, mpi_world_comm);
 
+  return 0;
+}
+
+
+int MDI_Plugin_open_engine_cxx(void* plugin_state) {
+  MDI_Set_plugin_state(plugin_state);
+
+  // Get the MPI intra-communicator for this code
+  MPI_Comm mpi_world_comm = MPI_COMM_WORLD;
+  MDI_MPI_get_world_comm(&mpi_world_comm);
+
+  // Perform one-time operations required to establish a connection with the driver
+  MDI_Comm comm;
+  initialize_mdi(&comm);
+
+  // Set the execute_command callback
+  void* engine_obj;
+  MDI_Set_execute_command_func(execute_command, engine_obj);
+
+  // Respond to commands from the driver
+  //respond_to_commands(comm, mpi_world_comm);
+
+  return 0;
+}
+
+
+int MDI_Plugin_close_engine_cxx() {
   return 0;
 }
 
