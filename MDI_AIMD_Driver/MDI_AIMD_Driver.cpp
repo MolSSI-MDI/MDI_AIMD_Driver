@@ -80,7 +80,6 @@ int main(int argc, char **argv) {
   }
 
   // Perform the simulation
-  int niterations = 10;  // Number of MD iterations
   int natoms;
   double qm_energy;
   double mm_energy;
