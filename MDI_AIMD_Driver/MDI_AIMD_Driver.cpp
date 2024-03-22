@@ -31,6 +31,20 @@ int main(int argc, char **argv) {
     throw std::runtime_error("MDI_MPI_get_world_comm failed.");
   }
 
+   // Set up the number of iterations
+  int niterations = 10;  // Default number of MD iterations
+    // Parse command line arguments for niterations
+  for(int i = 1; i < argc; i++) {
+    if(strcmp(argv[i], "-niterations") == 0) {
+      if(i + 1 < argc) { // Make sure we aren't at the end of argv!
+        niterations = stoi(argv[++i]); // Increment 'i' so we don't get the argument as the next loop iteration
+      } else { // Uh-oh, there was no argument to the -niterations option.
+        cerr << "-niterations option requires one argument." << endl;
+        return 1;
+      }  
+    }
+  }
+
   // Connect to the engines
   MDI_Comm mm_comm = MDI_COMM_NULL;
   MDI_Comm qm_comm = MDI_COMM_NULL;
@@ -66,7 +80,6 @@ int main(int argc, char **argv) {
   }
 
   // Perform the simulation
-  int niterations = 10;  // Number of MD iterations
   int natoms;
   double qm_energy;
   double mm_energy;
